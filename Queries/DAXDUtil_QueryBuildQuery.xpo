@@ -119,41 +119,41 @@ Formatversion: 1
         #    source += '// Query elements declaration' + '\n';
         #    source += 'Query                q = new Query();' + '\n';
         #    source += 'QueryRun             qr;' + '\n';
-        #    source += 'QueryBuildDataSource qds<TABLE_NAME1>;' + '\n';
-        #    source += 'QueryBuildDataSource qds<TABLE_NAME2>;' + '\n';
-        #    source += 'QueryBuildRange      qbr<FIELD_NAME1>;' + '\n';
-        #    source += 'QueryBuildRange      qbr<FIELD_NAME2>;' + '\n';
+        #    source += 'QueryBuildDataSource qds{TABLE_NAME1};' + '\n';
+        #    source += 'QueryBuildDataSource qds{TABLE_NAME2};' + '\n';
+        #    source += 'QueryBuildRange      qbr{FIELD_NAME1};' + '\n';
+        #    source += 'QueryBuildRange      qbr{FIELD_NAME2};' + '\n';
         #    source += '\n';
         #    source += '// Tables declaration' + '\n';
-        #    source += '<TABLE_NAME1>   <TABLE_NAME1>;' + '\n';
-        #    source += '<TABLE_NAME2>   <TABLE_NAME2>;' + '\n';
+        #    source += '{TABLE_NAME1}   {TABLE_NAME1};' + '\n';
+        #    source += '{TABLE_NAME2}   {TABLE_NAME2};' + '\n';
         #    source += ';' + '\n';
         #    source += '\n';
-        #    source += '// <TABLE_NAME1> query datasource' + '\n';
-        #    source += 'qds<TABLE_NAME1> = q.addDataSource(tableNum(<TABLE_NAME1>));' + '\n';
+        #    source += '// {TABLE_NAME1} query datasource' + '\n';
+        #    source += 'qds{TABLE_NAME1} = q.addDataSource(tableNum({TABLE_NAME1}));' + '\n';
         #    source += '\n';
-        #    source += 'qbr<FIELD_NAME1> = qds<TABLE_NAME1>.addRange(fieldNum(<TABLE_NAME1>, <FIELD_NAME1>));' + '\n';
-        #    source += 'qbr<FIELD_NAME1>.value(SysQuery::value("SOME_VALUE"));' + '\n';
+        #    source += 'qbr{FIELD_NAME1} = qds{TABLE_NAME1}.addRange(fieldNum({TABLE_NAME1}, {FIELD_NAME1}));' + '\n';
+        #    source += 'qbr{FIELD_NAME1}.value(SysQuery::value("SOME_VALUE"));' + '\n';
         #    source += '\n';
-        #    source += '// <TABLE_NAME2> query datasource' + '\n';
-        #    source += 'qds<TABLE_NAME2> = qds<TABLE_NAME1>.addDataSource(tableNum(<TABLE_NAME2>));' + '\n';
-        #    source += 'qds<TABLE_NAME2>.relations(true);' + '\n';
+        #    source += '// {TABLE_NAME2} query datasource' + '\n';
+        #    source += 'qds{TABLE_NAME2} = qds{TABLE_NAME1}.addDataSource(tableNum({TABLE_NAME2}));' + '\n';
+        #    source += 'qds{TABLE_NAME2}.relations(true);' + '\n';
         #    source += '\n';
-        #    source += 'qbr<FIELD_NAME2> = qds<TABLE_NAME2>.addRange(fieldNum(<TABLE_NAME2>, <FIELD_NAME2>));' + '\n';
-        #    source += 'qbr<FIELD_NAME2>.value(SysQuery::value("SOME_VALUE"));' + '\n';
+        #    source += 'qbr{FIELD_NAME2} = qds{TABLE_NAME2}.addRange(fieldNum({TABLE_NAME2}, {FIELD_NAME2}));' + '\n';
+        #    source += 'qbr{FIELD_NAME2}.value(SysQuery::value("SOME_VALUE"));' + '\n';
         #    source += '\n';
         #    source += 'qr = new QueryRun(q);' + '\n';
         #    source += '\n';
         #    source += 'while (qr.next())' + '\n';
         #    source += '{' + '\n';
-        #    source += '    if (qr.changed(tableNum(<TABLE_NAME1>)))' + '\n';
+        #    source += '    if (qr.changed(tableNum({TABLE_NAME1})))' + '\n';
         #    source += '    {' + '\n';
-        #    source += '        <TABLE_NAME1> = qr.get(tableNum(<TABLE_NAME1>));' + '\n';
+        #    source += '        {TABLE_NAME1} = qr.get(tableNum({TABLE_NAME1}));' + '\n';
         #    source += '    }' + '\n';
         #    source += '\n';
-        #    source += '    if (qr.changed(tableNum(<TABLE_NAME2>)))' + '\n';
+        #    source += '    if (qr.changed(tableNum({TABLE_NAME2})))' + '\n';
         #    source += '    {' + '\n';
-        #    source += '        <TABLE_NAME2> = qr.get(tableNum(<TABLE_NAME2>));' + '\n';
+        #    source += '        {TABLE_NAME2} = qr.get(tableNum({TABLE_NAME2}));' + '\n';
         #    source += '    }' + '\n';
         #    source += '}' + '\n';
         #
@@ -910,8 +910,13 @@ Formatversion: 1
         #public void template_database_buildQuery(Editor editor)
         #{
         #    xppSource xppSource = new xppSource(editor.columnNo());
+        #    int currentLine = editor.currentLineNo();
+        #    int currentCol = editor.columnNo();
+        #    Source template = xppSource.DAXD_buildQuery();
         #
-        #    editor.insertLines(xppSource.DAXD_buildQuery());
+        #    editor.insertLines(template);
+        #    editor.gotoLine(currentLine+1);
+        #    editor.gotoCol(currentCol+5);
         #}
         #//</DAXDUtil>
       ENDSOURCE
