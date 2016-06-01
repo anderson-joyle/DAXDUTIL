@@ -111,15 +111,6 @@ Formatversion: 1
         #    return source;
         #}
       ENDSOURCE
-      SOURCE #DAXD_myproj
-        #Source DAXD_myproj()
-        #{
-        #;
-        #    source += '//<BRA workitem="%1" date="%2" user="%3">';
-        #
-        #    return source;
-        #}
-      ENDSOURCE
       SOURCE #DAXD_table_find
         #//<DAXD>
         #//<DAXD_TableFindMethod>
@@ -833,9 +824,6 @@ Formatversion: 1
         #        //
         #        // Editor scripts that does not apply to Macros
         #        //
-        #        //<DAXD>
-        #        case methodStr(EditorScripts, last_myproj):
-        #        //</DAXD>
         #        case methodStr(EditorScripts, template_database_whileSelect):
         #        case methodStr(EditorScripts, template_flow_do):
         #        case methodStr(EditorScripts, template_flow_if):
@@ -901,27 +889,6 @@ Formatversion: 1
         #    editor.insertLines(template);
         #}
         #
-      ENDSOURCE
-      SOURCE #last_myproj
-        #void last_myproj(Editor editor)
-        #{
-        #    UserInfo userInfo = UserInfo;
-        #    xppSource xppSource = new xppSource(editor.columnNo());
-        #
-        #    str ret;
-        #    ;
-        #
-        #    select userInfo
-        #        where userInfo.id == curUserId();
-        #
-        #    ret += strFmt(xppSource.DAXD_myproj(),userInfo.startupProject
-        #                                         ,date2str(systemdateget(), 123,2,2,2,2,2, DateFlags::None)
-        #                                         ,userInfo.id);
-        #    ret += '\n';
-        #    ret += '//</BRA>';
-        #
-        #    editor.insertLines(ret);
-        #}
       ENDSOURCE
       SOURCE #sendTo_file
         #public void sendTo_file(Editor  e)
