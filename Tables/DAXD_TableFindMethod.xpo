@@ -1,0 +1,1455 @@
+﻿Exportfile for AOT version 1.0 or later
+Formatversion: 1
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: xppSource descarregado
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #xppSource
+    PROPERTIES
+      Name                #xppSource
+      Origin              #{2D090B94-0000-1000-1FDE-7F536F757263}
+      LegacyId            #2964
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #beginBlock
+        #private void beginBlock()
+        #{
+        #    source += this.indent()+'{\n';
+        #    indentLevel += #defaultIndentColumns;
+        #}
+      ENDSOURCE
+      SOURCE #block
+        #Source block(Source _statement = '')
+        #{
+        #    source += this.indent() + strFmt('{');
+        #    source += '\n';
+        #    source += this.indent() + this.indent() + strFmt('%1',_statement);
+        #    source += '\n';
+        #    source += this.indent() + strFmt('}');
+        #    //source += '\n';
+        #
+        #    return source;
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #// This is a framework class. Customizing this class may cause problems with future upgrades to the software.
+        #class XppSource
+        #{
+        #    #define.defaultIndentColumns(4)
+        #    #xppTexts
+        #
+        #    int     indentLevel;
+        #    Source  source;
+        #}
+      ENDSOURCE
+      SOURCE #classHeader
+        #Source classHeader()
+        #{
+        #    UserInfo    tUserInfo;
+        #
+        #    #Retail
+        #    ;
+        #    select * from tUserInfo
+        #        where tUserInfo.id == curuserId();
+        #
+        #    source += strfmt("// ------------------------------------------------(c) %1 LAST", year(systemdateget()));
+        #    source += #CharNewLine;
+        #    source += "// System: Microsoft Dynamics AX for Retail Headquarters)";
+        #    source += #CharNewLine;
+        #    source += "// Purpose:";
+        #    source += #CharNewLine;
+        #    source += "// Description:";
+        #    source += #CharNewLine;
+        #    source += "// Extern:";
+        #    source += #CharNewLine;
+        #    source += "// Creator:         ";
+        #    source += tUserInfo.Name;
+        #    source += strfmt(" (%1)", tUserInfo.id );
+        #    source += #CharNewLine;
+        #    source += "// Others:";
+        #    source += #CharNewLine;
+        #    source += "// Creation date:   ";
+        #    source += date2str(systemdateget(), 123, 2,2,2,2,2, DateFlags::None);
+        #    source += #CharNewLine;
+        #    source += "// -----------------------------------------------------------------";
+        #    source += #CharNewLine;
+        #    source += "// -----------------------------------------------------------------";
+        #    source += #CharNewLine;
+        #
+        #    return source;
+        #}
+      ENDSOURCE
+      SOURCE #comment
+        #Source comment()
+        #{
+        #;
+        #    source += strfmt("// #! INCIDENT !#.LAST.%1.%2:", date2str(systemdateget(), 123,2,2,2,2,2, DateFlags::None), curuserId());
+        #
+        #    return source;
+        #}
+      ENDSOURCE
+      SOURCE #constructMethod
+        #Source constructMethod(
+        #    className    className
+        #    )
+        #{
+        #    className    = strLRTrim(className);
+        #    className    = strUpr(subStr(className,1,1))+subStr(className,2,strLen(className));
+        #
+        #    source += strFmt('public static %1 construct()',className);
+        #    source += '\n';
+        #    this.beginBlock();
+        #    source += this.indent();
+        #    source += strFmt('return new %1();',className);
+        #    source += '\n';
+        #    this.endBlock();
+        #
+        #    return source;
+        #}
+      ENDSOURCE
+      SOURCE #DAXD_myproj
+        #Source DAXD_myproj()
+        #{
+        #;
+        #    source += '//<BRA workitem="%1" date="%2" user="%3">';
+        #
+        #    return source;
+        #}
+      ENDSOURCE
+      SOURCE #DAXD_table_find
+        #//<DAXD>
+        #//<DAXD_TableFindMethod>
+        #Source DAXD_table_find(Source    _tableName = "<table_name>",
+        #                       container _conParameters = conNull())
+        #{
+        #    SysDictField dictField;
+        #
+        #    str findStatement;
+        #    str parameters;
+        #    int idx;
+        #    ;
+        #
+        #    for (idx = 1 ;idx <= conLen(_conParameters); idx++)
+        #    {
+        #        dictField = new SysDictField(tableName2id(_tableName), any2int(conPeek(_conParameters,idx)));
+        #
+        #        parameters += strFmt("%1 _%2,", extendedTypeId2name(dictField.typeId()), dictField.name());
+        #    }
+        #
+        #    source += strFmt("public %1 find(%2boolean _forUpdate = false)",_tableName
+        #                                                                   ,parameters ? strfmt("%1 ", parameters) : "");
+        #    source += '\n';
+        #
+        #    findStatement += strFmt("%1 table;", _tableName);
+        #    findStatement += '\n';
+        #    findStatement += ';';
+        #    findStatement += '\n';
+        #    findStatement += '\n';
+        #    findStatement += 'table.selectForUpdate(_forUpdate);';
+        #    findStatement += '\n';
+        #    findStatement += '\n';
+        #    findStatement += 'select firstonly table';
+        #    findStatement += '\n';
+        #    findStatement += this.indent() + "where ";
+        #
+        #    for (idx = 1 ;idx <= conLen(_conParameters); idx++)
+        #    {
+        #        dictField = new SysDictField(tableName2id(_tableName), any2int(conPeek(_conParameters,idx)));
+        #
+        #        findStatement += strFmt("table.%1 == _%1", dictField.name());
+        #
+        #        if (idx < conLen(_conParameters))
+        #        {
+        #            findStatement += '\n';
+        #            findStatement += '&&    ';
+        #        }
+        #    }
+        #
+        #    findStatement += ';';
+        #    findStatement += '\n';
+        #    findStatement += '\n';
+        #    findStatement += "return table;";
+        #
+        #    this.block(findStatement);
+        #
+        #    return source;
+        #}
+        #//</DAXD>
+      ENDSOURCE
+      SOURCE #doWhile
+        #Source doWhile(Source _condition = '',
+        #             Source _loopStatement = '')
+        #{
+        #    source += strFmt('do',_condition);
+        #    source += '\n';
+        #
+        #    this.block(_loopStatement);
+        #    source += '\n';
+        #    source +=  this.indent() + strFmt('while (%1);',_condition);
+        #
+        #    return source;
+        #}
+      ENDSOURCE
+      SOURCE #editMethod
+        #Source editMethod(
+        #    extendedDataTypeName    typeName,
+        #    tableName               tableName,
+        #    SysElementName          name
+        #    )
+        #{
+        #    typeName    = strLRTrim(typeName);
+        #    name        = strLRTrim(name);
+        #
+        #    source += strFmt('public edit %1 edit%2(',typeName,name)+#newLine;
+        #    indentLevel = 4;
+        #    source += this.indent()+#boolean+' _set,'+#newline;
+        #    if (tableName)
+        #    {
+        #        source += this.indent()+strFmt('%1 _%1,',tableName)+#newline;
+        #    }
+        #    source += this.indent()+strFmt('%1 _%2',typeName,name)+#newline;
+        #    source += this.indent()+')'+#newline;
+        #    indentLevel = 0;
+        #    this.beginBlock();
+        #    source += this.indent();
+        #    this.if('_set',strFmt('%1 = _%1;',name));
+        #    source += #newline;
+        #    source += this.indent()+#return+' '+name+#semicolon;
+        #    source += #newline;
+        #    this.endBlock();
+        #
+        #    return source;
+        #}
+      ENDSOURCE
+      SOURCE #editMethodWithClass
+        #Source editMethodWithClass(
+        #    extendedDataTypeName    typeName,
+        #    SysElementName          name,
+        #    className               className,      // Could be empty
+        #    SysElementName          methodname      // Could be empty
+        #    )
+        #{
+        #    str ifBlock;
+        #
+        #    typeName    = strLRTrim(typeName);
+        #    name        = strLRTrim(name);
+        #    className   = strLRTrim(className);
+        #    methodname  = strLRTrim(methodname);
+        #
+        #    source += strFmt('public edit %1 edit%2(boolean _set, %1 _%2)',typeName,name);
+        #    source += '\n';
+        #    source += '{';
+        #    source += '\n';
+        #    source += this.indent();
+        #    if (className)
+        #    {
+        #        if (methodname)
+        #        {
+        #            ifBlock = strFmt('%1.%2(_%3);',className,methodname,name);
+        #        }
+        #        else
+        #        {
+        #            ifBlock = strFmt('%1.%2(_%2);',className,name);
+        #        }
+        #    }
+        #    else
+        #    {
+        #        ifBlock = strFmt('%1 = _%1;',name);
+        #    }
+        #
+        #    this.if('_set', ifBlock);
+        #
+        #    source += '\n';
+        #    source += this.indent();
+        #    if (className)
+        #    {
+        #        if (methodname)
+        #        {
+        #            source += strFmt('return %1.%2();',className,methodname);
+        #        }
+        #        else
+        #        {
+        #            source += strFmt('return %1.%2();',className,name);
+        #        }
+        #    }
+        #    else
+        #    {
+        #        source += strFmt('return %1;',name);
+        #    }
+        #
+        #    source += '\n';
+        #    source += '}';
+        #
+        #    return source;
+        #}
+      ENDSOURCE
+      SOURCE #elseBlock
+        #Source elseBlock()
+        #{
+        #    source += 'else\n';
+        #
+        #    this.block();
+        #
+        #    return source;
+        #}
+      ENDSOURCE
+      SOURCE #endBlock
+        #private void endBlock()
+        #{
+        #    if (indentLevel >= #defaultIndentColumns)
+        #        indentLevel -= #defaultIndentColumns;
+        #    source += this.indent()+'}';
+        #}
+      ENDSOURCE
+      SOURCE #endLine
+        #private void endLine()
+        #{
+        #    source += '\n';
+        #}
+      ENDSOURCE
+      SOURCE #for
+        #Source for(Source _initialization = '',
+        #           Source _condition = '',
+        #           Source _update = '',
+        #           Source _loopStatement = '')
+        #{
+        #    source += strFmt('for (%1;%2;%3)',_initialization,_condition,_update);
+        #    source += '\n';
+        #
+        #    this.block(_loopStatement);
+        #
+        #    return source;
+        #}
+      ENDSOURCE
+      SOURCE #functionHeader
+        #Source functionHeader()
+        #{
+        #    #Retail
+        #    ;
+        #
+        #    source += strfmt("// ------------------------------------------------(c) %1 Last", year(systemdateget()));
+        #    source += #CharNewLine;
+        #    source += "// System: Microsoft Dynamics AX for Retail Headquarters";
+        #    source += #CharNewLine;
+        #    source += "// Description:";
+        #    source += #CharNewLine;
+        #    source += "// Parameters:      None";
+        #    source += #CharNewLine;
+        #    source += "// Return value:    None";
+        #    source += #CharNewLine;
+        #    source += "// Exceptions:      None";
+        #    source += #CharNewLine;
+        #    source += "// Pre-conditions:  None";
+        #    source += #CharNewLine;
+        #    source += "// Post-conditions: None";
+        #    source += #CharNewLine;
+        #    source += "// Creator:         ";
+        #    source += #CharNewLine;
+        #    source += "// Creation date:   ";
+        #    source += date2str(systemdateget(), 123, 2,2,2,2,2, DateFlags::None);
+        #    source += #CharNewLine;
+        #    source += "// -----------------------------------------------------------------";
+        #    source += #CharNewLine;
+        #    source += "// -----------------------------------------------------------------";
+        #    source += #CharNewLine;
+        #
+        #    return source;
+        #}
+      ENDSOURCE
+      SOURCE #headerLine
+        #private void headerLine(str _headerstr)
+        #{
+        #    source += strFmt(_headerStr+'\n');
+        #}
+      ENDSOURCE
+      SOURCE #if
+        #Source if(Source _condition = '',
+        #          Source _conditionalStatement = '')
+        #{
+        #    source += strFmt('if (%1)',_condition);
+        #    source += '\n';
+        #
+        #    this.block(_conditionalStatement);
+        #
+        #    return source;
+        #}
+      ENDSOURCE
+      SOURCE #ifElse
+        #Source ifElse(Source _condition = '',
+        #              Source _ifStatement = '',
+        #              Source _elseStatement = '')
+        #{
+        #    this.if(_condition,_ifStatement);
+        #    source += '\n';
+        #
+        #    source += this.indent()+strFmt('else');
+        #    source += '\n';
+        #
+        #    this.block(_elseStatement);
+        #
+        #    return source;
+        #}
+      ENDSOURCE
+      SOURCE #ifElseIfElse
+        #Source ifElseIfElse(Source _ifCondition = '',
+        #                    Source _ifStatement = '',
+        #                    Source _elseIfCondition = '',
+        #                    Source _elseIfStatement = '',
+        #                    Source _elseStatement = '')
+        #{
+        #    this.if(_ifCondition,_ifStatement);
+        #
+        #    source += strFmt('else');
+        #    source += '\n';
+        #
+        #    source += this.indent();
+        #    this.if(_elseIfCondition,_elseIfStatement);
+        #
+        #    source += strFmt('else');
+        #    source += '\n';
+        #    this.block(_elseStatement);
+        #
+        #    source += this.indent();
+        #
+        #    return source;
+        #}
+      ENDSOURCE
+      SOURCE #indent
+        #SourceLine indent() {return strRep(' ',indentLevel);}
+      ENDSOURCE
+      SOURCE #mainMethod
+        #Source mainMethod()
+        #{
+        #    this.newSource();
+        #    this.headerLine('public static void main(Args _args)');
+        #    this.beginBlock();
+        #    this.endLine();
+        #    this.endBlock();
+        #    return source;
+        #}
+      ENDSOURCE
+      SOURCE #new
+        #void new(int _indentLevel = 0)
+        #{
+        #    indentLevel = _indentLevel;
+        #}
+      ENDSOURCE
+      SOURCE #newSource
+        #private void newSource()
+        #{
+        #    source = '';
+        #}
+      ENDSOURCE
+      SOURCE #parmMethod
+        #Source parmMethod(
+        #    extendedDataTypeName    typeName,
+        #    SysElementName          name
+        #    )
+        #{
+        #    SysElementName     parmName;
+        #
+        #    typeName    = strLRTrim(typeName);
+        #    name        = strLRTrim(name);
+        #
+        #    typeName    = strUpr(subStr(typeName,1,1))+subStr(typeName,2,strLen(typeName));
+        #    name        = strLwr(subStr(name,1,1))+subStr(name,2,strLen(name));
+        #    parmName    = strUpr(subStr(name,1,1))+subStr(name,2,strLen(name));
+        #
+        #    source += strFmt('public %1 parm%2(%1 _%3 = %3)',typeName,parmName,name);
+        #    source += '\n';
+        #    this.beginBlock();
+        #    source += this.indent();
+        #    source += strFmt('%1 = _%1;',name);
+        #    source += '\n';
+        #    source += '\n';
+        #    source += this.indent();
+        #    source += strFmt('return %1;',name);
+        #    source += '\n';
+        #    this.endBlock();
+        #
+        #    return source;
+        #}
+      ENDSOURCE
+      SOURCE #switch
+        #Source switch(Source _condition = '')
+        #{
+        #    source += strFmt('switch (%1)',_condition);
+        #    source += '\n';
+        #    this.beginBlock();
+        #
+        #    source += this.indent() + strFmt('case :') + '\n';
+        #
+        #    indentLevel += #defaultIndentColumns;
+        #    source += this.indent() + strFmt('break;') + '\n';
+        #    source += '\n';
+        #
+        #    indentLevel -= #defaultIndentColumns;
+        #    source += this.indent() + strFmt('case :') + '\n';
+        #
+        #    indentLevel += #defaultIndentColumns;
+        #    source += this.indent() + strFmt('break;') + '\n';
+        #    source += '\n';
+        #
+        #    indentLevel -= #defaultIndentColumns;
+        #
+        #    this.endBlock();
+        #
+        #    return source;
+        #}
+      ENDSOURCE
+      SOURCE #tryCatch
+        #Source tryCatch(Source _tryStatement = '',
+        #                Source _catchCondition = '',
+        #                Source _catchStatement = '')
+        #{
+        #    source += strFmt('try');
+        #    source += '\n';
+        #
+        #    this.block(_tryStatement);
+        #    source += '\n';
+        #
+        #    if (_catchCondition)
+        #    {
+        #        source += this.indent() + strFmt('catch (%1)',_catchCondition);
+        #    }
+        #    else
+        #    {
+        #        source += this.indent() + 'catch';
+        #    }
+        #    source += '\n';
+        #
+        #    this.block(_catchStatement);
+        #
+        #    return source;
+        #}
+      ENDSOURCE
+      SOURCE #while
+        #Source while(Source _condition = '',
+        #             Source _loopStatement = '')
+        #{
+        #    source += strFmt('while (%1)',_condition);
+        #    source += '\n';
+        #
+        #    this.block(_loopStatement);
+        #
+        #    return source;
+        #}
+      ENDSOURCE
+      SOURCE #whileSelect
+        #Source whileSelect(Source _data = '',
+        #                   Source _condition = '',
+        #                   Source _loopStatement = '')
+        #{
+        #    source += strFmt('while select %1',_data);
+        #    source += '\n';
+        #//    source += this.indent() + this.indent() + strFmt('order by ');
+        #//    source += '\n';
+        #    source += this.indent() + this.indent() + strFmt('where %1',_condition);
+        #    source += '\n';
+        #
+        #    this.block(_loopStatement);
+        #
+        #    source += this.indent();
+        #
+        #    return source;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: CLS
+
+; Microsoft Dynamics AX Class: EditorScripts descarregado
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #EditorScripts
+    PROPERTIES
+      Name                #EditorScripts
+      RunOn               #Client
+      Origin              #{2D0D0984-0000-1000-4BE1-54DC59156563}
+      LegacyId            #2436
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #addIns_OpenNewWindow
+        #public void addIns_OpenNewWindow(Editor e)
+        #{
+        #    TreeNode treeNode = TreeNode::findNode(e.path());
+        #    ;
+        #    treeNode = TreeNode::findNode(xUtilElements::getNodePathRough(xUtilElements::parentElement(xUtilElements::findTreeNode(treeNode))));
+        #    if (treeNode)
+        #        treeNode.AOTnewWindow();
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #// This is a framework class. Customizing this class may cause problems with future upgrades to the software.
+        #class EditorScripts
+        #{
+        #}
+      ENDSOURCE
+      SOURCE #documentation_HeaderTemplate
+        #//AOSRunmode::Client
+        #public void documentation_HeaderTemplate(Editor _editor)
+        #{
+        #    #TokenTypes
+        #    #AOT
+        #    #SysBPCheck
+        #    #SysCompilerOutput
+        #
+        #    #define.startLine(2)
+        #    #define.startColumn(5)
+        #    #define.maxDialogString(800)
+        #
+        #    str source;
+        #    str text;
+        #    MemberFunction memberFunction = TreeNode::findNode(_editor.path());
+        #    TreeNode parent = TreeNode::findNode(SysTreeNode::pathParent(_editor.path()));
+        #    SysDictMethod sysDictMethod;
+        #    int i;
+        #    int symbol;
+        #    SysScannerClass scanner;
+        #    TreeNode exceptionNode;
+        #    TreeNode exceptionValueNode;
+        #    xRefTmpReferences tmpxRefReferences;       // the source, as the xRef sees it
+        #    DictClass dictClass;
+        #    ListEnumerator listEnum;
+        #    str existingDoc;
+        #
+        #str formatXML(XML _xml)
+        #{
+        #    _xml = strReplace(_xml, '>', '>\n');
+        #    _xml = strReplace(_xml, '<', '\n<');
+        #
+        #    _xml = strReplace(_xml, '\n<c>\n', '<c>');
+        #    _xml = strReplace(_xml, '\n</c>\n', '</c>');
+        #    _xml = strReplace(_xml, '\n\n', '\n');
+        #
+        #    return '\n'+_xml+'\n';
+        #}
+        #
+        #    if (parent)
+        #    {
+        #        // Save to get latest source.
+        #        parent.AOTsave();
+        #
+        #        source = memberFunction.AOTgetSource();
+        #
+        #        if (!strLen(source))
+        #            return;
+        #
+        #        // Mark the memberfunction as dirty
+        #        memberFunction.AOTsetSource(source);
+        #    }
+        #
+        #    sysDictMethod = SysDictMethod::newMemberFunction(memberFunction);
+        #
+        #    if (sysDictMethod.compiledOk())
+        #    {
+        #        if (sysDictMethod.xmlDocumentationCanBeAutomated())
+        #        {
+        #            //
+        #            // Truncate to max length
+        #            //
+        #            existingDoc = formatXml(sysDictMethod.xmlDocumentationAutomated());
+        #            if (strLen(existingDoc) > #maxDialogString)
+        #            {
+        #                existingDoc = subStr(existingDoc, 1, #maxDialogString)+'\n...\n';
+        #            }
+        #
+        #            if (Box::yesNo(strFmt("@SYS107202", existingDoc+'\n')+"@SYS107204", DialogButton::No, "@SYS107109") == DialogButton::No)
+        #            {
+        #                return;
+        #            }
+        #        }
+        #        existingDoc = sysDictMethod.xmlDocumentationInherited();
+        #
+        #        if (existingDoc &&
+        #            Box::yesNo(strFmt("@SYS327437", '\n'+existingDoc+'\n')+"@SYS107204", DialogButton::No, "@SYS107109") == DialogButton::No)
+        #        {
+        #            return;
+        #        }
+        #
+        #        scanner = new SysScannerClass(memberFunction);
+        #        appl.updatexRefSet(true);
+        #        memberFunction.aoTmakeXref(1);
+        #        tmpxRefReferences = xRefCreate::makeTmp(appl.lastxRef(), memberFunction.treeNodePath());
+        #        appl.updatexRefSet(false);
+        #
+        #        //
+        #        // Insert summary
+        #        //
+        #        text = '/// <summary>\n/// \n/// </summary>\n';
+        #
+        #        //
+        #        // Insert parameters
+        #        //
+        #        for (i=1; i<=sysDictMethod.parameterCnt(); i++)
+        #        {
+        #            if (!sysDictMethod.parameterName(i))
+        #            {
+        #                // BP Deviation documented
+        #                throw error("@SYS107108", '', SysInfoAction_Formrun::newFormnameControlnameDesc(formStr(SysUserSetup), identifierStr(DebuggerPopupCombo), "@SYS321"));
+        #            }
+        #            text += strFmt('/// <param name="%1">\n/// \n/// </param>\n', sysDictMethod.parameterName(i));
+        #        }
+        #
+        #        //
+        #        // Insert returns
+        #        //
+        #        if (sysDictMethod.returnType() != Types::void &&
+        #            sysDictMethod.name() != #MethodNameClassDeclaration)
+        #        {
+        #            text += '/// <returns>\n/// \n/// </returns>\n';
+        #        }
+        #
+        #        //
+        #        // Insert remarks
+        #        //
+        #        text += '/// <remarks>\n/// \n/// </remarks>\n';
+        #
+        #        //
+        #        // Insert exceptions
+        #        //
+        #        if (scanner.symbolExists(#Throw_sym))
+        #        {
+        #            exceptionNode  = TreeNode::findNode(#SystemEnumsPath+'\\'+enumStr(Exception));
+        #            scanner.firstSymbol();
+        #            symbol = scanner.nextSymbol();
+        #            while (symbol)
+        #            {
+        #                while (symbol && symbol != #Throw_sym)
+        #                {
+        #                    symbol = scanner.nextSymbol();
+        #                }
+        #                if (symbol)
+        #                {
+        #                    symbol = scanner.nextSymbol();
+        #                    if (scanner.string() == enumStr(Exception))
+        #                    {
+        #                        scanner.nextSymbol();
+        #                        scanner.nextSymbol();
+        #                    }
+        #                    //
+        #                    // Get right casing
+        #                    //
+        #                    exceptionValueNode = exceptionNode.AOTfindChild(scanner.string());
+        #                    if (exceptionValueNode)
+        #                    {
+        #                        text += strFmt('/// <exception cref="Exception::%1">\n/// \n/// </exception>\n', exceptionValueNode.treeNodeName());
+        #                    }
+        #                }
+        #            }
+        #        }
+        #
+        #        //
+        #        // Insert permission
+        #        //
+        #        dictClass = new DictClass(classNum(CodeAccessPermission));
+        #        listEnum = dictClass.extendedBy().getEnumerator();
+        #        while (listEnum.moveNext())
+        #        {
+        #            while select tmpxRefReferences
+        #                where tmpxRefReferences.ParentId == listEnum.current()
+        #                  && tmpxRefReferences.Name == methodStr(CodeAccessPermission, demand)
+        #                  && tmpxRefReferences.Kind == xRefKind::ClassInstanceMethod
+        #            {
+        #                text += strFmt('/// <permission cref="%1">\n/// \n/// </permission>\n', classId2Name(listEnum.current()));
+        #
+        #                //
+        #                // Only add each permission class once
+        #                //
+        #                break;
+        #            }
+        #        }
+        #
+        #        _editor.unmark();
+        #        _editor.gotoLine(1);
+        #        _editor.gotoCol(1);
+        #        _editor.insertLines(text);
+        #        _editor.gotoLine(#startLine);
+        #        _editor.gotoCol(#startColumn);
+        #    }
+        #    else
+        #    {
+        #        throw error(strFmt("@SYS97041", 1, memberFunction.treeNodePath()));
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #getApplicableScripts
+        #//
+        #// System entry point
+        #//
+        #public container getApplicableScripts(Editor _editor)
+        #{
+        #    TreeNode aotNode = EditorScripts::getApplObjectNode(_editor);
+        #    DictClass dictClass = new DictClass(classNum(EditorScripts));
+        #    DictMethod dictMethod;
+        #    int i;
+        #    container scripts;
+        #
+        #    //
+        #    // Insert menu items
+        #    //
+        #    for (i = 1; i <= dictClass.objectMethodCnt(); i++)
+        #    {
+        #        dictMethod = dictClass.objectMethodObject(i);
+        #        if (this.isApplicableMethod(dictMethod, aotNode))
+        #        {
+        #            scripts += dictMethod.name();
+        #        }
+        #    }
+        #
+        #    return scripts;
+        #}
+      ENDSOURCE
+      SOURCE #isApplicableMethod
+        #//
+        #// Use this method to control what scripts are shown on the scripts popup menu in the editor
+        #//
+        #protected boolean isApplicableMethod(DictMethod _dictMethod, TreeNode _aotNode)
+        #{
+        #    #TreenodeSysNodeType
+        #    //
+        #    // Only one parameter of type Editor
+        #    // Must be public
+        #    // Must return void
+        #    //
+        #    if (_dictMethod.parameterCnt() != 1 ||
+        #        _dictMethod.parameterType(1) != Types::Class ||
+        #        _dictMethod.parameterId(1) != classNum(Editor) ||
+        #        _dictMethod.accessSpecifier() != AccessSpecifier::public ||
+        #        _dictMethod.returnType() != Types::void)
+        #    {
+        #        return false;
+        #    }
+        #
+        #    switch (_dictMethod.name())
+        #    {
+        #        //
+        #        // Editor scripts that does not apply to Macros
+        #        //
+        #        //<DAXD>
+        #        case methodStr(EditorScripts, last_myproj):
+        #        //</DAXD>
+        #        case methodStr(EditorScripts, template_database_whileSelect):
+        #        case methodStr(EditorScripts, template_flow_do):
+        #        case methodStr(EditorScripts, template_flow_if):
+        #        case methodStr(EditorScripts, template_flow_ifElse):
+        #        case methodStr(EditorScripts, template_flow_else):
+        #        case methodStr(EditorScripts, template_flow_switch):
+        #        case methodStr(EditorScripts, template_flow_try):
+        #        case methodStr(EditorScripts, template_flow_for):
+        #        case methodStr(EditorScripts, template_flow_while):
+        #            if (_aotNode &&
+        #                _aotNode.treeNodeType().id() != #NT_MCRCODE)
+        #            {
+        #                return true;
+        #            }
+        #            return false;
+        #
+        #        //
+        #        // Editor scripts that does not apply to Macros and Jobs
+        #        //
+        #        case methodStr(EditorScripts, template_method_construct):
+        #        case methodStr(EditorScripts, template_method_edit):
+        #        case methodStr(EditorScripts, template_method_editWithClass):
+        #        case methodStr(EditorScripts, template_method_main):
+        #        case methodStr(EditorScripts, template_method_parm):
+        #        case methodStr(EditorScripts, documentation_HeaderTemplate):
+        #            if (_aotNode &&
+        #                _aotNode.treeNodeType().id() != #NT_MCRCODE &&
+        #                _aotNode.treeNodeType().id() != #NT_XALCODE)
+        #            {
+        #                return true;
+        #            }
+        #            return false;
+        #    }
+        #
+        #    return true;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #last_classHeader
+        #void last_classHeader(Editor editor)
+        #{
+        #    xppSource xppSource = new xppSource(editor.columnNo());
+        #    Source template = xppSource.classHeader();
+        #    ;
+        #    editor.insertLines(template);
+        #}
+      ENDSOURCE
+      SOURCE #last_comment
+        #void last_comment(Editor editor)
+        #{
+        #    xppSource xppSource = new xppSource(editor.columnNo());
+        #    Source template = xppSource.comment();
+        #    ;
+        #    editor.insertLines(template);
+        #}
+      ENDSOURCE
+      SOURCE #last_functionHeader
+        #void last_functionHeader(Editor editor)
+        #{
+        #    xppSource xppSource = new xppSource(editor.columnNo());
+        #    Source template = xppSource.functionHeader();
+        #    ;
+        #    editor.insertLines(template);
+        #}
+        #
+      ENDSOURCE
+      SOURCE #last_myproj
+        #void last_myproj(Editor editor)
+        #{
+        #    UserInfo userInfo = UserInfo;
+        #    xppSource xppSource = new xppSource(editor.columnNo());
+        #
+        #    str ret;
+        #    ;
+        #
+        #    select userInfo
+        #        where userInfo.id == curUserId();
+        #
+        #    ret += strFmt(xppSource.DAXD_myproj(),userInfo.startupProject
+        #                                         ,date2str(systemdateget(), 123,2,2,2,2,2, DateFlags::None)
+        #                                         ,userInfo.id);
+        #    ret += '\n';
+        #    ret += '//</BRA>';
+        #
+        #    editor.insertLines(ret);
+        #}
+      ENDSOURCE
+      SOURCE #sendTo_file
+        #public void sendTo_file(Editor  e)
+        #{
+        #    Filename filename;
+        #    TextIo io;
+        #    int i = strFind(e.path(), '\\', strLen(e.path()), -strLen(e.path()));
+        #    str defaultName = subStr(e.path(), i+1, strLen(e.path()));
+        #    ;
+        #    filename = WinAPI::getSaveFileName(0, ['Text','*.txt'], '', "@SYS56237", 'txt', defaultName );
+        #    if (filename)
+        #    {
+        #        // BP deviation documented
+        #        io = new TextIo(filename, 'W', 65001); // Write the file in UTF8
+        #        io.write(EditorScripts::getSelectedText(e));
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #sendTo_mailRecipient
+        #public void sendTo_mailRecipient(Editor e)
+        #{
+        #    SysINetMail mail = new SysINetMail();
+        #    mail.sendMail('',e.path(),EditorScripts::getSelectedText(e),true);
+        #}
+      ENDSOURCE
+      SOURCE #template_database_whileSelect
+        #public void template_database_whileSelect(Editor editor)
+        #{
+        #    xppSource xppSource = new xppSource(editor.columnNo());
+        #    int currentLine = editor.currentLineNo();
+        #    int currentCol = editor.columnNo();
+        #
+        #    editor.insertLines(xppSource.whileSelect());
+        #
+        #    editor.gotoLine(currentLine+1);
+        #    editor.gotoCol(currentCol+15);
+        #
+        #}
+      ENDSOURCE
+      SOURCE #template_flow_do
+        #public void template_flow_do(Editor editor)
+        #{
+        #    xppSource xppSource = new xppSource(editor.columnNo());
+        #    int currentLine = editor.currentLineNo();
+        #    int currentCol = editor.columnNo();
+        #
+        #    editor.insertLines(xppSource.doWhile());
+        #
+        #    editor.gotoLine(currentLine+3);
+        #    editor.insertString(strRep(' ', 4+currentCol));
+        #}
+        #
+      ENDSOURCE
+      SOURCE #template_flow_else
+        #public void template_flow_else(Editor editor)
+        #{
+        #    xppSource xppSource = new xppSource(editor.columnNo());
+        #    int currentLine = editor.currentLineNo();
+        #    int currentCol = editor.columnNo();
+        #    Source template = xppSource.elseBlock();
+        #
+        #    editor.insertLines(template);
+        #    editor.gotoLine(currentLine+3);
+        #    editor.gotoCol(currentCol+5);
+        #}
+      ENDSOURCE
+      SOURCE #template_flow_for
+        #public void template_flow_for(Editor editor)
+        #{
+        #    xppSource xppSource = new xppSource(editor.columnNo());
+        #    int currentLine = editor.currentLineNo();
+        #    int currentCol = editor.columnNo();
+        #
+        #    editor.insertLines(xppSource.for());
+        #    editor.gotoLine(currentLine+1);
+        #    editor.gotoCol(currentCol+6);
+        #}
+        #
+      ENDSOURCE
+      SOURCE #template_flow_if
+        #public void template_flow_if(Editor editor)
+        #{
+        #    xppSource xppSource = new xppSource(editor.columnNo());
+        #    int currentLine = editor.currentLineNo();
+        #    int currentCol = editor.columnNo();
+        #    Source template = xppSource.if();
+        #
+        #    editor.insertLines(template);
+        #    editor.gotoLine(currentLine+1);
+        #    editor.gotoCol(currentCol+5);
+        #}
+      ENDSOURCE
+      SOURCE #template_flow_ifElse
+        #public void template_flow_ifElse(Editor editor)
+        #{
+        #    xppSource xppSource = new xppSource(editor.columnNo());
+        #    int currentLine = editor.currentLineNo();
+        #    int currentCol = editor.columnNo();
+        #
+        #    editor.insertLines(xppSource.ifElse());
+        #
+        #    editor.gotoLine(currentLine+1);
+        #    editor.gotoCol(currentCol+5);
+        #}
+      ENDSOURCE
+      SOURCE #template_flow_switch
+        #public void template_flow_switch(Editor editor)
+        #{
+        #    xppSource xppSource = new xppSource(editor.columnNo());
+        #    int currentLine = editor.currentLineNo();
+        #    int currentCol = editor.columnNo();
+        #
+        #    editor.insertLines(xppSource.switch());
+        #    editor.gotoLine(currentLine+1);
+        #    editor.gotoCol(currentCol+9);
+        #
+        #}
+        #
+      ENDSOURCE
+      SOURCE #template_flow_try
+        #public void template_flow_try(Editor editor)
+        #{
+        #    xppSource xppSource = new xppSource(editor.columnNo());
+        #    int currentLine = editor.currentLineNo();
+        #    int currentCol = editor.columnNo();
+        #
+        #    editor.insertLines(xppSource.tryCatch());
+        #    editor.gotoLine(currentLine+3);
+        #    editor.insertString(strRep(' ', 4+currentCol));
+        #}
+        #
+      ENDSOURCE
+      SOURCE #template_flow_while
+        #public void template_flow_while(Editor editor)
+        #{
+        #    xppSource xppSource = new xppSource(editor.columnNo());
+        #    int currentLine = editor.currentLineNo();
+        #    int currentCol = editor.columnNo();
+        #
+        #    editor.insertLines(xppSource.while());
+        #
+        #    editor.gotoLine(currentLine+1);
+        #    editor.gotoCol(currentCol+8);
+        #}
+        #
+      ENDSOURCE
+      SOURCE #template_method_construct
+        #public void template_method_construct(Editor editor)
+        #{
+        #    xppSource       xppSource         = new xppSource();
+        #    Dialog          dialog;
+        #    DialogField     dlgClassTypeName;
+        #    Source          template;
+        #    str             path = editor.path();
+        #    TreeNode        treeNode = path ? TreeNode::findNode(path) : null;
+        #    ClassName       className;
+        #    #TreeNodeSysNodeType
+        #
+        #    if (treeNode)
+        #    {
+        #        treeNode = treeNode.AOTparent();
+        #        if (treeNode && treeNode.treeNodeType().id() == #NT_CLASS)
+        #        {
+        #            className = treeNode.treeNodeName();
+        #        }
+        #    }
+        #
+        #    if (!className)
+        #    {
+        #        dialog = new Dialog("@SYS73363");
+        #        dlgClassTypeName = dialog.addField(extendedTypeStr(ClassName));
+        #        if (!dialog.run())
+        #        {
+        #            return;
+        #        }
+        #        className = dlgClassTypeName.value();
+        #    }
+        #
+        #    if (className)
+        #    {
+        #        template = xppSource.constructMethod(className);
+        #
+        #        editor.insertLines(template);
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #template_method_edit
+        #public void template_method_edit(Editor editor)
+        #{
+        #    xppSource       xppSource       = new xppSource();
+        #    Dialog          dialog          = new Dialog("@SYS69534");
+        #    DialogField     dlgExtTypeName  = dialog.addField(extendedTypeStr(ExtendedDataTypeName));
+        #    DialogField     dlgTablename    = dialog.addField(extendedTypeStr(TableName));
+        #    DialogField     dlgName         = dialog.addField(extendedTypeStr(SysElementName),"@SYS62312","@SYS62313");
+        #    Source          template;
+        #;
+        #    if (dialog.run())
+        #    {
+        #        template = xppSource.editMethod(dlgExtTypeName.value(),dlgTablename.value(),dlgName.value());
+        #
+        #        editor.insertLines(template);
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #template_method_editWithClass
+        #public void template_method_editWithClass(Editor editor)
+        #{
+        #    xppSource       xppSource       = new xppSource(4);
+        #    Dialog          dialog          = new Dialog("@SYS63066");
+        #    DialogField     dlgExtTypeName  = dialog.addField(extendedTypeStr(ExtendedDataTypeName));
+        #    DialogField     dlgName         = dialog.addField(extendedTypeStr(SysElementName),"@SYS62312","@SYS63067");
+        #    DialogField     dlgClassname    = dialog.addField(extendedTypeStr(ClassName),"@SYS24724","@SYS63068");
+        #    DialogField     dlgMethod       = dialog.addField(extendedTypeStr(SysElementName),"@SYS26958","@SYS63070");
+        #    Source          template;
+        #;
+        #    if (dialog.run())
+        #    {
+        #        template = xppSource.editMethodWithClass(dlgExtTypeName.value(),dlgName.value(),dlgClassname.value(),dlgMethod.value());
+        #
+        #        editor.insertLines(template);
+        #    }
+        #
+        #}
+      ENDSOURCE
+      SOURCE #template_method_main
+        #public void template_method_main(Editor editor)
+        #{
+        #    xppSource       xppSource = new xppSource();
+        #    Source          template;
+        #
+        #    template = xppSource.mainMethod();
+        #    editor.insertLines(template);
+        #
+        #    editor.gotoLine(3);
+        #    editor.insertString('    ');
+        #}
+      ENDSOURCE
+      SOURCE #template_method_parm
+        #public void template_method_parm(Editor editor)
+        #{
+        #    xppSource       xppSource       = new xppSource();
+        #    Dialog          dialog          = new Dialog("@SYS62311");
+        #    DialogField     dlgExtTypeName  = dialog.addField(extendedTypeStr(SysXppType),'','',false /* ignoreEDTConstraints */);
+        #    DialogField     dlgName         = dialog.addField(extendedTypeStr(SysElementName),"@SYS62312","@SYS62313");
+        #    Source          template;
+        #
+        #    if (dialog.run())
+        #    {
+        #        template = xppSource.parmMethod(dlgExtTypeName.value(),dlgName.value());
+        #
+        #        editor.insertLines(template);
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #template_method_test
+        #/// <summary>
+        #/// Editor script for test methods
+        #/// </summary>
+        #/// <param name="editor">
+        #/// The <c>Editor</c> class to insert the test method to.
+        #/// </param>
+        #public void template_method_test(Editor editor)
+        #{
+        #    xppSource       xppSource = new xppSource();
+        #    Source          template;
+        #
+        #    template = @'[SysTestCheckInTestAttribute]
+        #public void test()
+        #{
+        #    // Arrange
+        #
+        #    // Act
+        #
+        #    // Assert
+        #
+        #}';
+        #    editor.insertLines(template);
+        #
+        #    editor.gotoLine(2);
+        #    editor.gotoCol(17);
+        #}
+        #
+      ENDSOURCE
+      SOURCE #template_table_find
+        #//<DAXD>
+        #//<DAXD_TableFindMethod>
+        #public void template_table_find(Editor editor)
+        #{
+        #    xppSource xppSource = new xppSource();
+        #
+        #    TreeNode node;
+        #
+        #    SysDictTable dictTable;
+        #    SysDictIndex dictIndex;
+        #
+        #    container conIndex;
+        #    int       idx;
+        #
+        #    // From AOT path, finds table name recursively
+        #    TreeNode findTableNode(TreeNode _node)
+        #    {
+        #        TreeNode nodeLoc;
+        #
+        #        if (_node.AOTparent())
+        #        {
+        #            if (_node.AOTparent().AOTname() == "Tables")
+        #            {
+        #                nodeLoc = _node;
+        #            }
+        #            else
+        #            {
+        #                nodeLoc = findTableNode(_node.AOTparent());
+        #            }
+        #
+        #        }
+        #
+        #        return nodeLoc;
+        #    }
+        #    ;
+        #
+        #    node = findTableNode(TreeNode::findNode(editor.path()));
+        #
+        #    if (node)
+        #    {
+        #        dictTable = new SysDictTable(tableName2Id(node.AOTname()));
+        #
+        #        // Chooses ReplacementKey over PrimaryIndex
+        #        if (dictTable.replacementKey())
+        #        {
+        #            dictIndex = new SysDictIndex(dictTable.id(), dictTable.replacementKey());
+        #        }
+        #        else
+        #        {
+        #            dictIndex = new SysDictIndex(dictTable.id(), dictTable.primaryIndex());
+        #        }
+        #
+        #        for (idx = 1 ;idx <= dictIndex.numberOfFields(); idx++)
+        #        {
+        #            conIndex += [dictIndex.field(1)];
+        #        }
+        #    }
+        #
+        #    // Create and insert the method code
+        #    editor.insertLines(xppSource.DAXD_table_find(dictTable.name(), conIndex));
+        #}
+        #//<DAXD>
+        #
+        #
+        #
+      ENDSOURCE
+      SOURCE #transformSelection
+        #private void transformSelection(Editor _editor, IdentifierName _transformation)
+        #{
+        #    str line;
+        #    int i;
+        #    int startLine = _editor.selectionStartLine();
+        #    int endLine   = _editor.selectionEndLine();
+        #    int startCol  = _editor.selectionStartCol(); //points at the first selected char
+        #    int endCol    = _editor.selectionEndCol()-1; //points at the last selected char
+        #    MarkMode markMode = _editor.markMode();
+        #    #define.maxLineLength(300)
+        #
+        #str transform(str data)
+        #{
+        #    switch (_transformation)
+        #    {
+        #        case identifierStr('strlwr'):
+        #            return strLwr(data);
+        #
+        #        case identifierStr('strupr'):
+        #            return strUpr(data);
+        #    }
+        #    return data;
+        #}
+        #
+        #void transformLine(int lineNo, int start, int end)
+        #{
+        #    _editor.gotoCol(0);
+        #    _editor.gotoLine(lineNo);
+        #    line = _editor.currentLine();
+        #    line = subStr(line, 1, start-1) +
+        #           transform(subStr(line, start, end-start+1)) +
+        #           subStr(line, end+1, #maxLineLength);
+        #
+        #    _editor.deleteLines(1);
+        #    _editor.insertLines(line+'\n');
+        #    return;
+        #}
+        #;
+        #    _editor.unmark();
+        #
+        #    switch (markMode)
+        #    {
+        #        case MarkMode::LineMark:
+        #            _editor.gotoCol(1);
+        #            for (i=startLine; i<=endLine; i++)
+        #            {
+        #                transformLine(i, 1, #maxLineLength);
+        #            }
+        #            break;
+        #
+        #        case MarkMode::ColMark:
+        #            for (i=startLine; i<=endLine; i++)
+        #            {
+        #                transformLine(i, startCol, endCol);
+        #            }
+        #            break;
+        #
+        #        case MarkMode::AreaMark:
+        #            if (startLine == endLine)
+        #            {
+        #                transformLine(startLine, startCol, endCol);
+        #            }
+        #            else
+        #            {
+        #                //convert first line
+        #                transformLine(startLine, startCol, #maxLineLength);
+        #
+        #                //convert full lines
+        #                for (i=startLine+1; i<endLine; i++)
+        #                {
+        #                    transformLine(i, 1, #maxLineLength);
+        #                }
+        #
+        #                //convert last line
+        #                transformLine(endLine, 1, endCol);
+        #            }
+        #            break;
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #getApplObjectNode
+        #protected static TreeNode getApplObjectNode(Editor _editor)
+        #{
+        #    TreeNode aotNode = TreeNode::findNode(_editor.path());
+        #    return SysTreeNode::getRootElement(aotNode);
+        #}
+      ENDSOURCE
+      SOURCE #getSelectedText
+        #public static str getSelectedText(Editor e)
+        #{
+        #    int i;
+        #    str text;
+        #    str line;
+        #    int startLine = e.selectionStartLine()+1;
+        #    int endLine   = e.selectionEndLine()+1;
+        #    int startCol  = e.selectionStartCol();
+        #    int endCol    = e.selectionEndCol();
+        #
+        #    if (startLine == endLine && startCol == endCol)
+        #    {
+        #        e.firstLine();
+        #        while (e.moreLines())
+        #        {
+        #            text += e.getLine()+'\r\n';
+        #            e.nextLine();
+        #        }
+        #    }
+        #    else
+        #    {
+        #        e.firstSelectedLine();
+        #        for (i = startLine; i <= endLine; i++)
+        #        {
+        #            line = e.getLine();
+        #            if (i == startLine && i == endLine)
+        #            {
+        #                line = subStr(line, startcol, endCol-startCol);
+        #            }
+        #            else
+        #            if (i == endLine)
+        #            {
+        #                line = subStr(line, 1, endCol-1);
+        #            }
+        #            else
+        #            if (i == startLine)
+        #            {
+        #                line = strRep(' ', startCol-1)+subStr(line, startCol, strLen(line));
+        #            }
+        #
+        #            text += line + '\r\n';
+        #            e.nextSelectedLine();
+        #        }
+        #    }
+        #    return text;
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: PRN
+
+; Microsoft Dynamics AX Project : DAXD_TableFindMethod unloaded
+; --------------------------------------------------------------------------------
+  PROJECTVERSION 2
+  
+  PROJECT #DAXD_TableFindMethod
+  PRIVATE
+  PROPERTIES
+    Name                #DAXD_TableFindMethod
+    Origin              #{FF8E4138-2E77-414B-AAFE-0FB71A00D215}
+  ENDPROPERTIES
+  
+    PROJECTCLASS ProjectNode
+    GROUP #Classes
+      PROPERTIES
+        Name                #Classes
+        ProjectGroupType    #Classes
+        GroupMask           #
+        PreventEditProperties #No
+      ENDPROPERTIES
+      
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 2964
+        NODETYPE 329
+        NAME #xppSource
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 2436
+        NODETYPE 329
+        NAME #EditorScripts
+      ENDNODE
+      ENDGROUP
+      
+  ENDPROJECT
+  
+
+***Element: END
