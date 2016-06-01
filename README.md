@@ -1,7 +1,9 @@
 # DAXDUTIL
 Microsoft Dynamics AX Utilities for developers
 
-This is a list with some utilities and tools that might be useful at DAX development process. ~~PLEASE~~ You are more than welcome to contribute with your awsome utility/tool.
+This is a list with some utilities and tools that might be useful at DAX development process. Each file represents a single project and were written in a clean AX enviroment.
+ 
+~~PLEASE~~ You are more than welcome to contribute with your awsome utility/tool.
 
 ### DAX 2012 tools
 * [Tables](https://github.com/anderson-joyle/DAXDUTIL/tree/master/Tables)
