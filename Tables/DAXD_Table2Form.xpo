@@ -1,6 +1,514 @@
 ﻿Exportfile for AOT version 1.0 or later
 Formatversion: 1
 
+***Element: CLS
+
+; Microsoft Dynamics AX Class: DEL_DAXDTable2FormWizard descarregado
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #DEL_DAXDTable2FormWizard
+    PROPERTIES
+      Name                #DEL_DAXDTable2FormWizard
+      Extends             #SysWizard
+      RunOn               #Client
+      Origin              #{3768ACE1-56FC-4F55-A433-8511E1D624E8}
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #accessMenuFunction
+        #public MenuFunction accessMenuFunction()
+        #{
+        #    return new MenuFunction(menuitemdisplaystr(DAXDTable2FormWizard),MenuItemType::Display);
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #public class DEL_DAXDTable2FormWizard extends SysWizard
+        #{
+        #    TableName tableName;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #formName
+        #FormName formName()
+        #{
+        #    return formstr(DAXDTable2FormWizard);
+        #}
+        #
+      ENDSOURCE
+      SOURCE #parmTableName
+        #public TableName parmTableName(TableName _tableName = tableName)
+        #{
+        #    tableName = _tableName;
+        #
+        #    return tableName;
+        #}
+      ENDSOURCE
+      SOURCE #run
+        #void run()
+        #{
+        #    DAXDTable2FormTranslation formTranslation = DAXDTable2FormTranslation::construct(this.parmTableName());
+        #    DAXDTable2FormCreate formCreate;
+        #    ;
+        #
+        #    formCreate = DAXDTable2FormCreate::construct(formTranslation);
+        #    formCreate.create();
+        #}
+        #
+      ENDSOURCE
+      SOURCE #setupNavigation
+        #/*
+        #Use this method to setup the two arrays: nextEnabled[] and backEnabled[]
+        #Call this.nextEnabled(boolean) and this.backEnabled(boolean) to enable/disable the buttons runtime.
+        #*/
+        #void setupNavigation()
+        #{
+        #
+        #}
+        #
+      ENDSOURCE
+      SOURCE #validate
+        #boolean validate()
+        #{
+        #    return true;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #main
+        #static void main(args args)
+        #{
+        #    DAXDTable2FormWizard wizard = new DAXDTable2FormWizard();
+        #    TableName            tableName;
+        #    SysContextMenu       sysContextMenu;
+        #    TreeNode             treeNode;
+        #    ;
+        #
+        #    if (SysContextMenu::startedFrom(args))
+        #    {
+        #        sysContextMenu  = args.parmObject();
+        #        treeNode        = sysContextMenu.first();
+        #        if (treeNode)
+        #        {
+        #            tableName = treeNode.AOTname();
+        #            wizard.parmTableName(tableName);
+        #        }
+        #    }
+        #    else
+        #    {
+        #        throw error(error::wrongUseOfFunction(funcName()));
+        #    }
+        #
+        #    if (wizard.prompt())
+        #        wizard.run();
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
+***Element: FRM
+
+; Microsoft Dynamics AX Forms unloaded
+; --------------------------------------------------------------------------------
+FRMVERSION 12
+
+FORM #DEL_DAXDTable2FormWizard
+  PROPERTIES
+    Name                #DEL_DAXDTable2FormWizard
+  ENDPROPERTIES
+  
+  METHODS
+    SOURCE #classDeclaration
+      #class FormRun extends ObjectRun
+      #{
+      #    DAXDTable2FormWizard sysWizard;
+      #    DAXDTable2FormTranslation formTranslation;
+      #}
+      #
+    ENDSOURCE
+    SOURCE #init
+      #void init()
+      #{
+      #    super();
+      #
+      #    if (element.Args().caller())
+      #    {
+      #        sysWizard = element.Args().caller();
+      #
+      #        TableName.text(sysWizard.parmTableName());
+      #
+      #        element.setFields();
+      #    }
+      #    else
+      #    {
+      #        DAXDTable2FormWizard::main(new args());
+      #        element.closeCancel();
+      #    }
+      #}
+      #
+    ENDSOURCE
+    SOURCE #run
+      #void run()
+      #{
+      #    element.setTexts();
+      #
+      #    super();
+      #}
+      #
+    ENDSOURCE
+    SOURCE #setFields
+      #public void setFields()
+      #{
+      #    if (TableName.text())
+      #    {
+      #        formTranslation = DAXDTable2FormTranslation::construct(TableName.text());
+      #
+      #        FormName.text(formTranslation.parmFormName());
+      #        FormLabel.text(formTranslation.parmFormLabel());
+      #        FormStyle.selection(formTranslation.parmFormStyle());
+      #    }
+      #}
+    ENDSOURCE
+    SOURCE #setTexts
+      #void setTexts()
+      #{
+      #
+      #}
+      #
+    ENDSOURCE
+    SOURCE #tab
+      #FormTabControl tab()
+      #{
+      #    return tab;
+      #}
+      #
+    ENDSOURCE
+    SOURCE #wizard
+      #SysWizard wizard()
+      #{
+      #    return sysWizard;
+      #}
+      #
+    ENDSOURCE
+  ENDMETHODS
+  OBJECTBANK
+    PROPERTIES
+    ENDPROPERTIES
+    
+  ENDOBJECTBANK
+  
+  REFERENCEDATASOURCES
+  ENDREFERENCEDATASOURCES
+  
+  JOINS
+  ENDJOINS
+  
+  PARTREFERENCES
+  ENDPARTREFERENCES
+  
+  DESIGN
+    PROPERTIES
+      Width               #Column width
+      Height              #Column height
+    ENDPROPERTIES
+    
+    CONTAINER
+      CONTROL GROUP
+        PROPERTIES
+          Name                #FormGrp
+          AutoDeclaration     #Yes
+          ElementPosition     #1610612733
+          HierarchyParent     #TableTab
+          Caption             #Form details
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL GROUP
+        PROPERTIES
+          Name                #TableGrp
+          AutoDeclaration     #Yes
+          ElementPosition     #1073741822
+          HierarchyParent     #TableTab
+          Caption             #@SYS40151
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL GROUP
+        PROPERTIES
+          Name                #WelcomeGrp
+          ElementPosition     #1431655764
+          HierarchyParent     #WelcomeTab
+          FrameType           #None
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL TAB
+        PROPERTIES
+          Name                #Tab
+          AutoDeclaration     #Yes
+          Width               #Column width
+          Height              #Column height
+          ElementPosition     #1073741823
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL TABPAGE
+        PROPERTIES
+          Name                #Step3
+          Width               #Column width
+          Height              #Column height
+          ElementPosition     #1717986916
+          HierarchyParent     #Tab
+          Caption             #Step 3 Title
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL TABPAGE
+        PROPERTIES
+          Name                #TableTab
+          Width               #Column width
+          Height              #Column height
+          ElementPosition     #1288490187
+          HierarchyParent     #Tab
+          Caption             #@SYS12687
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL TABPAGE
+        PROPERTIES
+          Name                #WelcomeTab
+          Width               #Column width
+          Height              #Column height
+          ElementPosition     #858993458
+          HierarchyParent     #Tab
+          Caption             #@SYS27227
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL COMBOBOX
+        PROPERTIES
+          Name                #FormStyle
+          AutoDeclaration     #Yes
+          Width               #200
+          ElementPosition     #1717986916
+          HierarchyParent     #FormGrp
+          Label               #@SYS341942
+          EnumType            #FormStyle
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL STATICTEXT
+        PROPERTIES
+          Name                #WelcomeText1
+          ElementPosition     #858993458
+          HierarchyParent     #WelcomeGrp
+          Text                #Use this assistent to generate display elements from a table (form, menuitem, listpage class).
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL STATICTEXT
+        PROPERTIES
+          Name                #WelcomeText2
+          ElementPosition     #1288490187
+          HierarchyParent     #WelcomeGrp
+          Text                #Its important to fully configurate the table before to use this assistent. Some properties are mandadory, such as: label, table group and title field 1.
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL STATICTEXT
+        PROPERTIES
+          Name                #WelcomeText3
+          ElementPosition     #1717986916
+          HierarchyParent     #WelcomeGrp
+          Text                #@SYS53990
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL STRINGEDIT
+        PROPERTIES
+          Name                #FormLabel
+          AutoDeclaration     #Yes
+          Width               #200
+          ElementPosition     #1288490187
+          HierarchyParent     #FormGrp
+          Label               #@SYS25058
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL STRINGEDIT
+        PROPERTIES
+          Name                #FormName
+          AutoDeclaration     #Yes
+          Width               #200
+          ElementPosition     #858993458
+          HierarchyParent     #FormGrp
+          Label               #@SYS117778
+          ExtendedDataType    
+            ARRAY 
+              #Name
+              #
+            ENDARRAY
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL STRINGEDIT
+        PROPERTIES
+          Name                #TableName
+          AutoDeclaration     #Yes
+          Width               #200
+          Enabled             #No
+          ElementPosition     #1431655764
+          HierarchyParent     #TableGrp
+          Label               #@SYS17421
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+    ENDCONTAINER
+    
+  ENDDESIGN
+  
+  PERMISSIONS #Permissions
+    PROPERTIES
+    ENDPROPERTIES
+    
+    PERMISSIONSET #Read
+      PROPERTIES
+      ENDPROPERTIES
+      
+      FORM #Controls
+      ENDFORM
+      
+    TABLES #Tables
+    ENDTABLES
+    
+  SERVERMETHODS #Server Methods
+  ENDSERVERMETHODS
+  
+ASSOCIATEDFORMS #Associated Forms
+ENDASSOCIATEDFORMS
+
+ENDPERMISSIONSET
+
+PERMISSIONSET #Update
+  PROPERTIES
+  ENDPROPERTIES
+  
+  FORM #Controls
+  ENDFORM
+  
+TABLES #Tables
+ENDTABLES
+
+SERVERMETHODS #Server Methods
+ENDSERVERMETHODS
+
+ASSOCIATEDFORMS #Associated Forms
+ENDASSOCIATEDFORMS
+
+ENDPERMISSIONSET
+
+PERMISSIONSET #Create
+  PROPERTIES
+  ENDPROPERTIES
+  
+  FORM #Controls
+  ENDFORM
+  
+TABLES #Tables
+ENDTABLES
+
+SERVERMETHODS #Server Methods
+ENDSERVERMETHODS
+
+ASSOCIATEDFORMS #Associated Forms
+ENDASSOCIATEDFORMS
+
+ENDPERMISSIONSET
+
+PERMISSIONSET #Delete
+  PROPERTIES
+  ENDPROPERTIES
+  
+  FORM #Controls
+  ENDFORM
+  
+TABLES #Tables
+ENDTABLES
+
+SERVERMETHODS #Server Methods
+ENDSERVERMETHODS
+
+ASSOCIATEDFORMS #Associated Forms
+ENDASSOCIATEDFORMS
+
+ENDPERMISSIONSET
+
+ENDPERMISSIONS
+
+ENDFORM
+
+
+***Element: FTM
+
+; Microsoft Dynamics AX MENUITEM : DEL_DAXDTable2FormWizard unloaded
+; --------------------------------------------------------------------------------
+  VERSION 1
+  
+  MENUITEM #DEL_DAXDTable2FormWizard
+    Type: 1
+    PROPERTIES
+      Name                #DEL_DAXDTable2FormWizard
+      Label               #New form
+      HelpText            #Generate form from table
+      ObjectType          #Class
+      Object              #DAXDTable2FormWizard
+      Origin              #{AC6FC741-64C6-4B41-B544-45569FF42D9B}
+    ENDPROPERTIES
+    
+  ENDMENUITEM
+  
+
 ***Element: DBT
 
 ; Microsoft Dynamics AX Table : TSTMainTable unloaded
@@ -215,11 +723,6 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
-      SOURCE #createOtherForms
-        #private void createOtherForms()
-        #{
-        #}
-      ENDSOURCE
       SOURCE #classDeclaration
         #abstract class DAXDTable2FormCreate
         #{
@@ -240,6 +743,8 @@ Formatversion: 1
         #        this.setGrid();
         #    }
         #
+        #    this.createMenuItem();
+        #
         #    this.createOtherForms();
         #
         #    this.openNewForm();
@@ -248,22 +753,43 @@ Formatversion: 1
       SOURCE #createForm
         #public void createForm()
         #{
-        #    TreeNode nodeDefaultBPnode = DAXDTable2FormUtil::getDefaultStyleFormNode(this.parmFormTranslation().getFormStyle());
+        #    TreeNode nodeDefaultBPnode = DAXDTable2FormUtil::getDefaultStyleFormNode(this.parmFormTranslation().parmFormStyle());
         #    ;
         #
         #    if (nodeDefaultBPnode)
         #    {
         #        nodeNewForm = nodeDefaultBPnode.AOTDuplicate();
-        #        nodeNewForm.AOTRename(this.parmFormTranslation().getFormName());
+        #        nodeNewForm.AOTRename(this.parmFormTranslation().parmFormName());
         #    }
         #    else
         #    {
-        #        nodeNewForm = DAXDTable2FormUtil::createAutoForm(this.parmFormTranslation().getFormName());
+        #        nodeNewForm = DAXDTable2FormUtil::createAutoForm(this.parmFormTranslation().parmFormName());
         #    }
         #
         #    nodeNewForm.AOTsave();
         #    nodeNewForm.AOTrestore();
         #    nodeNewForm.AOTcompile();
+        #}
+      ENDSOURCE
+      SOURCE #createMenuItem
+        #protected void createMenuItem()
+        #{
+        #    TreeNode node = DAXDTable2FormUtil::getMenuItemDisplayNode();
+        #    TreeNode nodeMenuItemDisplay;
+        #    ;
+        #
+        #    nodeMenuItemDisplay = node.AOTadd(this.parmFormTranslation().parmFormName());
+        #    nodeMenuItemDisplay.AOTsetProperty("ObjectType", "Form");
+        #    nodeMenuItemDisplay.AOTsetProperty("Object", this.parmFormTranslation().parmFormName());
+        #    nodeMenuItemDisplay.AOTsetProperty("Label", this.parmFormTranslation().parmFormLabel());
+        #
+        #    nodeMenuItemDisplay.AOTsave();
+        #    nodeMenuItemDisplay.AOTnewWindow();
+        #}
+      ENDSOURCE
+      SOURCE #createOtherForms
+        #protected void createOtherForms()
+        #{
         #}
       ENDSOURCE
       SOURCE #hasGrid
@@ -307,24 +833,24 @@ Formatversion: 1
       SOURCE #setDataSources
         #public void setDataSources()
         #{
-        #    TreeNode    node = DAXDTable2FormUtil::getFormDataSourceNode(this.parmFormTranslation().getFormName());
+        #    TreeNode    node = DAXDTable2FormUtil::getFormDataSourceNode(this.parmFormTranslation().parmFormName());
         #    TreeNode    nodeDataSource
         #    ;
         #
-        #    nodeDataSource = node.AOTadd(this.parmFormTranslation().getTableName());
-        #    nodeDataSource.AOTsetProperty("Name", this.parmFormTranslation().getTableName());
-        #    nodeDataSource.AOTsetProperty("Table", this.parmFormTranslation().getTableName());
+        #    nodeDataSource = node.AOTadd(this.parmFormTranslation().parmTableName());
+        #    nodeDataSource.AOTsetProperty("Name", this.parmFormTranslation().parmTableName());
+        #    nodeDataSource.AOTsetProperty("Table", this.parmFormTranslation().parmTableName());
         #    nodeDataSource.AOTsave();
         #}
       ENDSOURCE
       SOURCE #setDesign
         #public void setDesign()
         #{
-        #    TreeNode node = DAXDTable2FormUtil::getFormDesignNode(this.parmFormTranslation().getFormName());
+        #    TreeNode node = DAXDTable2FormUtil::getFormDesignNode(this.parmFormTranslation().parmFormName());
         #    ;
         #
-        #    node.AOTsetProperty("Caption", this.parmFormTranslation().getFormLabel());
-        #    node.AOTsetProperty("TitleDataSource", this.parmFormTranslation().getTableName());
+        #    node.AOTsetProperty("Caption", this.parmFormTranslation().parmFormLabel());
+        #    node.AOTsetProperty("TitleDataSource", this.parmFormTranslation().parmTableName());
         #}
       ENDSOURCE
       SOURCE #setGrid
@@ -336,7 +862,7 @@ Formatversion: 1
       SOURCE #construct
         #public static DAXDTable2FormCreate construct(DAXDTable2FormTranslation _formTranslation)
         #{
-        #    DAXDTable2FormCreate obj = DAXDTable2FormUtil::newTable2FormCreate(_formTranslation.getFormStyle());
+        #    DAXDTable2FormCreate obj = DAXDTable2FormUtil::newTable2FormCreate(_formTranslation.parmFormStyle());
         #    ;
         #
         #    obj.parmFormTranslation(_formTranslation);
@@ -383,6 +909,24 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
+      SOURCE #setGrid
+        #public void setGrid()
+        #{
+        #    TreeNode nodeGrid;
+        #    TreeNode nodeGridColumn;
+        #
+        #    DictFieldGroup dictFieldGroup;
+        #
+        #    int i;
+        #    ;
+        #
+        #    nodeGrid = DAXDTable2FormUtil::getFormGridNode(this.parmFormTranslation().parmTableName(),
+        #                                                   "HeaderGrid");
+        #
+        #    nodeGrid.AOTsetProperty("DataSource", this.parmFormTranslation().parmTableName());
+        #    nodeGrid.AOTsetProperty("DataGroup", "AutoLookup");
+        #}
+      ENDSOURCE
       SOURCE #classDeclaration
         #class DAXDTable2FormCreate_DetailsFormMaster extends DAXDTable2FormCreate
         #{
@@ -405,6 +949,16 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
+      SOURCE #createOtherForms
+        #protected void createOtherForms()
+        #{
+        #    ;
+        #    if (this.parmFormTranslation().parmCreateDetailFormMaster())
+        #    {
+        #        this.createFormDetail();
+        #    }
+        #}
+      ENDSOURCE
       SOURCE #classDeclaration
         #class DAXDTable2FormCreate_ListPage extends DAXDTable2FormCreate
         #{
@@ -423,6 +977,21 @@ Formatversion: 1
         #    super();
         #}
       ENDSOURCE
+      SOURCE #createFormDetail
+        #private void createFormDetail()
+        #{
+        #    DAXDTable2FormTranslation formTranslationDetail = DAXDTable2FormTranslation::construct(this.parmFormTranslation().parmTableName());
+        #    DAXDTable2FormCreate formDetailCreate;
+        #    ;
+        #
+        #    formTranslationDetail.parmFormLabel (this.parmFormTranslation().parmFormLabelDetail());
+        #    formTranslationDetail.parmFormName  (this.parmFormTranslation().parmFormNameDetail());
+        #    formTranslationDetail.parmFormStyle (this.parmFormTranslation().parmFormStyleDetail());
+        #
+        #    formDetailCreate = DAXDTable2FormCreate::construct(formTranslationDetail);
+        #    formDetailCreate.create();
+        #}
+      ENDSOURCE
       SOURCE #createListPageClass
         #private void createListPageClass()
         #{
@@ -434,7 +1003,7 @@ Formatversion: 1
         #    TreeNode  node = TreeNode::findNode(#ClassesPath);
         #    ;
         #
-        #    nodeListPageInteractionClass = node.AOTadd(strFmt("%1ListPageInteraction",this.parmFormTranslation().getFormName()));
+        #    nodeListPageInteractionClass = node.AOTadd(strFmt("%1ListPageInteraction",this.parmFormTranslation().parmFormName()));
         #    nodeListPageInteractionClass.AOTsave();
         #
         #    node = DAXDTable2FormUtil::getClassDeclarationNode(nodeListPageInteractionClass.AOTname());
@@ -461,18 +1030,18 @@ Formatversion: 1
         #    TreeNode  nodeFields;
         #    ;
         #
-        #    nodeListPageInteractionQuery = node.AOTadd(strFmt("%1ListPage",this.parmFormTranslation().getFormName()));
+        #    nodeListPageInteractionQuery = node.AOTadd(strFmt("%1ListPage",this.parmFormTranslation().parmFormName()));
         #    nodeListPageInteractionQuery.AOTsave();
         #
         #    node = DAXDTable2FormUtil::getQueryDataSourceNode(nodeListPageInteractionQuery.AOTname());
         #
-        #    nodeDataSource = node.AOTadd(this.parmFormTranslation().getTableName());
-        #    nodeDataSource.AOTsetProperty("Name", this.parmFormTranslation().getTableName());
-        #    nodeDataSource.AOTsetProperty("Table", this.parmFormTranslation().getTableName());
+        #    nodeDataSource = node.AOTadd(this.parmFormTranslation().parmTableName());
+        #    nodeDataSource.AOTsetProperty("Name", this.parmFormTranslation().parmTableName());
+        #    nodeDataSource.AOTsetProperty("Table", this.parmFormTranslation().parmTableName());
         #    nodeDataSource.AOTsave();
         #
         #    nodeFields = DAXDTable2FormUtil::getQueryFieldsNode(nodeListPageInteractionQuery.AOTname(),
-        #                                                        this.parmFormTranslation().getTableName());
+        #                                                        this.parmFormTranslation().parmTableName());
         #    nodeFields.AOTsetProperty("Dynamic", "Yes");
         #    nodeFields.AOTsave();
         #
@@ -506,10 +1075,10 @@ Formatversion: 1
         #    int i;
         #    ;
         #
-        #    nodeGrid = DAXDTable2FormUtil::getFormGridNode(this.parmFormTranslation().getTableName(),
+        #    nodeGrid = DAXDTable2FormUtil::getFormGridNode(this.parmFormTranslation().parmFormName(),
         #                                                   "ListPageGrid");
         #
-        #    nodeGrid.AOTsetProperty("DataSource", this.parmFormTranslation().getTableName());
+        #    nodeGrid.AOTsetProperty("DataSource", this.parmFormTranslation().parmTableName());
         #    nodeGrid.AOTsetProperty("DataGroup", "AutoLookup");
         #
         #
@@ -558,10 +1127,10 @@ Formatversion: 1
         #    int i;
         #    ;
         #
-        #    nodeGrid = DAXDTable2FormUtil::getFormGridNode(this.parmFormTranslation().getTableName(),
+        #    nodeGrid = DAXDTable2FormUtil::getFormGridNode(this.parmFormTranslation().parmTableName(),
         #                                                   "Grid");
         #
-        #    nodeGrid.AOTsetProperty("DataSource", this.parmFormTranslation().getTableName());
+        #    nodeGrid.AOTsetProperty("DataSource", this.parmFormTranslation().parmTableName());
         #    nodeGrid.AOTsetProperty("DataGroup", "AutoLookup");
         #
         #    nodeGrid.AOTsave();
@@ -632,30 +1201,20 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
-      SOURCE #getQueryFieldsNode
-        #public static TreeNode getQueryFieldsNode(Name _queryName, Name _tableName)
+      SOURCE #getMenuItemDisplayNode
+        #public static TreeNode getMenuItemDisplayNode(Name _menuItemDisplayName = "")
         #{
         #    #AOT
-        #
-        #    str path;
         #    ;
         #
-        #    path = strfmt("%1\\%2\\Data Sources\\%3\\Fields",#QueriesPath, _queryName, _tableName);
-        #
-        #    return TreeNode::findNode(path);
-        #}
-      ENDSOURCE
-      SOURCE #getQueryDataSourceNode
-        #public static TreeNode getQueryDataSourceNode(Name _queryName)
-        #{
-        #    #AOT
-        #
-        #    str path;
-        #    ;
-        #
-        #    path = strfmt("%1\\%2\\Data Sources",#QueriesPath, _queryName);
-        #
-        #    return TreeNode::findNode(path);
+        #    if (prmisDefault(_menuItemDisplayName))
+        #    {
+        #        return TreeNode::findNode(#MenuItemsDisplayPath);
+        #    }
+        #    else
+        #    {
+        #        return TreeNode::findNode(strFmt("%1\\%2", #MenuItemsDisplayPath, _menuItemDisplayName));
+        #    }
         #}
       ENDSOURCE
       SOURCE #classDeclaration
@@ -782,6 +1341,32 @@ Formatversion: 1
         #    return TreeNode::findNode(path);
         #}
       ENDSOURCE
+      SOURCE #getQueryDataSourceNode
+        #public static TreeNode getQueryDataSourceNode(Name _queryName)
+        #{
+        #    #AOT
+        #
+        #    str path;
+        #    ;
+        #
+        #    path = strfmt("%1\\%2\\Data Sources",#QueriesPath, _queryName);
+        #
+        #    return TreeNode::findNode(path);
+        #}
+      ENDSOURCE
+      SOURCE #getQueryFieldsNode
+        #public static TreeNode getQueryFieldsNode(Name _queryName, Name _tableName)
+        #{
+        #    #AOT
+        #
+        #    str path;
+        #    ;
+        #
+        #    path = strfmt("%1\\%2\\Data Sources\\%3\\Fields",#QueriesPath, _queryName, _tableName);
+        #
+        #    return TreeNode::findNode(path);
+        #}
+      ENDSOURCE
       SOURCE #newTable2FormCreate
         #static DAXDTable2FormCreate newTable2FormCreate(FormStyle _formStyle)
         #{
@@ -801,6 +1386,9 @@ Formatversion: 1
         #
         #        case FormStyle::SimpleListDetails:
         #            return new DAXDTable2FormCreate_SimpleListDetails();
+        #
+        #        case FormStyle::DetailsFormMaster:
+        #            return new DAXDTable2FormCreate_DetailsFormMaster();
         #
         #        default:
         #            throw error(strFmt("Form stype has not been yet implemented.", _formStyle));
@@ -824,26 +1412,42 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
-      SOURCE #getTableId
-        #public TableId getTableId()
+      SOURCE #parmFormStyleDetail
+        #public FormStyle parmFormStyleDetail(FormStyle _formDetailStyle = formDetailStyle)
         #{
-        #    TableId ret;
         #    ;
         #
-        #    ret = dictTable.id();
+        #    formDetailStyle = _formDetailStyle;
         #
-        #    return ret;
+        #    return formDetailStyle;
         #}
       ENDSOURCE
-      SOURCE #getTableName
-        #public str getTableName()
+      SOURCE #parmFormNameDetail
+        #public SysUtilElementName parmFormNameDetail(SysUtilElementName _formDetailName = formDetailName)
         #{
-        #    str ret;
         #    ;
         #
-        #    ret = dictTable.name();
+        #    formDetailName = _formDetailName;
         #
-        #    return ret;
+        #    return formDetailName;
+        #}
+      ENDSOURCE
+      SOURCE #parmFormLabelDetail
+        #public LabelString parmFormLabelDetail(LabelString _formDetailLabel = formDetailLabel)
+        #{
+        #    ;
+        #
+        #    formDetailLabel = _formDetailLabel;
+        #
+        #    return formDetailLabel;
+        #}
+      ENDSOURCE
+      SOURCE #parmCreateDetailFormMaster
+        #public boolean parmCreateDetailFormMaster(boolean _createDetailFormMaster = createDetailFormMaster)
+        #{
+        #    createDetailFormMaster = _createDetailFormMaster;
+        #
+        #    return createDetailFormMaster;
         #}
       ENDSOURCE
       SOURCE #classDeclaration
@@ -852,23 +1456,22 @@ Formatversion: 1
         #    SysUtilElementName tableName;
         #
         #    DictTable dictTable;
+        #
+        #    LabelString        formLabel;
+        #    SysUtilElementName formName;
+        #    FormStyle          formStyle;
+        #
+        #    LabelString        formDetailLabel;
+        #    SysUtilElementName formDetailName;
+        #    FormStyle          formDetailStyle;
+        #
+        #    boolean createDetailFormMaster;
         #}
       ENDSOURCE
-      SOURCE #getFormLabel
-        #public str getFormLabel()
+      SOURCE #DEL_getTableName
+        #public str DEL_getTableName()
         #{
         #    str ret;
-        #    ;
-        #
-        #    ret = dictTable.label();
-        #
-        #    return ret;
-        #}
-      ENDSOURCE
-      SOURCE #getFormName
-        #public SysUtilElementName getFormName()
-        #{
-        #    SysUtilElementName ret;
         #    ;
         #
         #    ret = dictTable.name();
@@ -928,12 +1531,65 @@ Formatversion: 1
         #    return ret;
         #}
       ENDSOURCE
+      SOURCE #getTableId
+        #public TableId getTableId()
+        #{
+        #    TableId ret;
+        #    ;
+        #
+        #    ret = dictTable.id();
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
       SOURCE #init
         #private void init()
         #{
         #    ;
         #
         #    dictTable = new DictTable(tableName2id(this.parmTableName()));
+        #
+        #    if (this.getFormStyle() == FormStyle::ListPage)
+        #    {
+        #        this.parmFormName(dictTable.name() + "ListPage");
+        #    }
+        #    else
+        #    {
+        #        this.parmFormName(dictTable.name());
+        #    }
+        #
+        #    this.parmFormLabel(dictTable.label());
+        #    this.parmFormStyle(this.getFormStyle());
+        #}
+      ENDSOURCE
+      SOURCE #parmFormLabel
+        #public LabelString parmFormLabel(LabelString _formLabel = formLabel)
+        #{
+        #    ;
+        #
+        #    formLabel = _formLabel;
+        #
+        #    return formLabel;
+        #}
+      ENDSOURCE
+      SOURCE #parmFormName
+        #public SysUtilElementName parmFormName(SysUtilElementName _formName = formName)
+        #{
+        #    ;
+        #
+        #    formName = _formName;
+        #
+        #    return formName;
+        #}
+      ENDSOURCE
+      SOURCE #parmFormStyle
+        #public FormStyle parmFormStyle(FormStyle _formStyle = formStyle)
+        #{
+        #    ;
+        #
+        #    formStyle = _formStyle;
+        #
+        #    return formStyle;
         #}
       ENDSOURCE
       SOURCE #parmTableName
@@ -954,106 +1610,6 @@ Formatversion: 1
         #    obj.init();
         #
         #    return obj;
-        #}
-      ENDSOURCE
-    ENDMETHODS
-  ENDCLASS
-
-***Element: CLS
-
-; Microsoft Dynamics AX Class: DAXDTable2FormWizard descarregado
-; --------------------------------------------------------------------------------
-  CLSVERSION 1
-  
-  CLASS #DAXDTable2FormWizard
-    PROPERTIES
-      Name                #DAXDTable2FormWizard
-      Extends             #SysWizard
-      RunOn               #Client
-      Origin              #{3768ACE1-56FC-4F55-A433-8511E1D624E8}
-    ENDPROPERTIES
-    
-    METHODS
-      SOURCE #accessMenuFunction
-        #public MenuFunction accessMenuFunction()
-        #{
-        #    return new MenuFunction(menuitemdisplaystr(DAXDTable2FormWizard),MenuItemType::Display);
-        #}
-      ENDSOURCE
-      SOURCE #classDeclaration
-        #public class DAXDTable2FormWizard extends SysWizard
-        #{
-        #    TableName tableName;
-        #}
-        #
-      ENDSOURCE
-      SOURCE #formName
-        #FormName formName()
-        #{
-        #    return formstr(DAXDTable2FormWizard);
-        #}
-        #
-      ENDSOURCE
-      SOURCE #parmTableName
-        #public TableName parmTableName(TableName _tableName = tableName)
-        #{
-        #    tableName = _tableName;
-        #
-        #    return tableName;
-        #}
-      ENDSOURCE
-      SOURCE #run
-        #void run()
-        #{
-        #    DAXDTable2FormTranslation formTranslation = DAXDTable2FormTranslation::construct(this.parmTableName());
-        #    DAXDTable2FormCreate formCreate;
-        #    ;
-        #
-        #    formCreate = DAXDTable2FormCreate::construct(formTranslation);
-        #    formCreate.create();
-        #}
-        #
-      ENDSOURCE
-      SOURCE #setupNavigation
-        #/*
-        #Use this method to setup the two arrays: nextEnabled[] and backEnabled[]
-        #Call this.nextEnabled(boolean) and this.backEnabled(boolean) to enable/disable the buttons runtime.
-        #*/
-        #void setupNavigation()
-        #{
-        #
-        #}
-        #
-      ENDSOURCE
-      SOURCE #validate
-        #boolean validate()
-        #{
-        #    return true;
-        #}
-        #
-      ENDSOURCE
-      SOURCE #main
-        #static void main(args args)
-        #{
-        #    DAXDTable2FormWizard wizard = new DAXDTable2FormWizard();
-        #    TableName            tableName;
-        #    SysContextMenu       sysContextMenu;
-        #    TreeNode             treeNode;
-        #    ;
-        #
-        #    if (SysContextMenu::startedFrom(args))
-        #    {
-        #        sysContextMenu  = args.parmObject();
-        #        treeNode        = sysContextMenu.first();
-        #        if (treeNode)
-        #        {
-        #            tableName = treeNode.AOTname();
-        #            wizard.parmTableName(tableName);
-        #        }
-        #    }
-        #
-        #    if (wizard.prompt())
-        #        wizard.run();
         #}
       ENDSOURCE
     ENDMETHODS
@@ -2158,6 +2714,184 @@ Formatversion: 1
     ENDMETHODS
   ENDCLASS
 
+***Element: CLS
+
+; Microsoft Dynamics AX Class: DAXDTable2FormWizard descarregado
+; --------------------------------------------------------------------------------
+  CLSVERSION 1
+  
+  CLASS #DAXDTable2FormWizard
+    PROPERTIES
+      Name                #DAXDTable2FormWizard
+      Extends             #SysWizard
+      RunOn               #Client
+      Origin              #{E85FDC1E-DFC2-4AFD-95DC-5D2D601C4FE0}
+    ENDPROPERTIES
+    
+    METHODS
+      SOURCE #accessMenuFunction
+        #public MenuFunction accessMenuFunction()
+        #{
+        #    return new MenuFunction(menuitemdisplaystr(DAXDTable2FormWizard),MenuItemType::Display);
+        #}
+      ENDSOURCE
+      SOURCE #back
+        #public void back()
+        #{
+        #    ;
+        #
+        #    super();
+        #
+        #    switch (this.curTab())
+        #    {
+        #        case 3:
+        #            if (formTranslation.parmFormStyle() != FormStyle::ListPage)
+        #            {
+        #                this.back();
+        #            }
+        #            break;
+        #
+        #        case 4:
+        #            if (formTranslation.parmFormStyle() != FormStyle::DetailsFormTransaction)
+        #            {
+        #                this.back();
+        #            }
+        #            break;
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #classDeclaration
+        #public class DAXDTable2FormWizard extends SysWizard
+        #{
+        #    TableName tableName;
+        #
+        #    DAXDTable2FormTranslation formTranslation;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #curTab
+        #public int curTab()
+        #{
+        #    int ret;
+        #
+        #    ret = super();
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
+      SOURCE #formName
+        #FormName formName()
+        #{
+        #    return formstr(DAXDTable2FormWizard);
+        #}
+        #
+      ENDSOURCE
+      SOURCE #next
+        #public void next()
+        #{
+        #    ;
+        #    super();
+        #
+        #    switch (this.curTab())
+        #    {
+        #        case 3:
+        #            if (formTranslation.parmFormStyle() != FormStyle::ListPage)
+        #            {
+        #                this.next();
+        #            }
+        #            break;
+        #
+        #        case 4:
+        #            if (formTranslation.parmFormStyle() != FormStyle::DetailsFormTransaction)
+        #            {
+        #                this.next();
+        #            }
+        #            break;
+        #    }
+        #}
+      ENDSOURCE
+      SOURCE #parmFormTranslation
+        #public DAXDTable2FormTranslation parmFormTranslation(TableName _tableName)
+        #{
+        #    ;
+        #
+        #    if (!formTranslation)
+        #    {
+        #        formTranslation = DAXDTable2FormTranslation::construct(_tableName);
+        #    }
+        #
+        #    return formTranslation;
+        #}
+      ENDSOURCE
+      SOURCE #parmTableName
+        #public TableName parmTableName(TableName _tableName = tableName)
+        #{
+        #    tableName = _tableName;
+        #
+        #    return tableName;
+        #}
+      ENDSOURCE
+      SOURCE #run
+        #void run()
+        #{
+        #    DAXDTable2FormCreate formCreate;
+        #    ;
+        #
+        #    formCreate = DAXDTable2FormCreate::construct(formTranslation);
+        #    formCreate.create();
+        #}
+        #
+      ENDSOURCE
+      SOURCE #setupNavigation
+        #/*
+        #Use this method to setup the two arrays: nextEnabled[] and backEnabled[]
+        #Call this.nextEnabled(boolean) and this.backEnabled(boolean) to enable/disable the buttons runtime.
+        #*/
+        #void setupNavigation()
+        #{
+        #
+        #}
+        #
+      ENDSOURCE
+      SOURCE #validate
+        #boolean validate()
+        #{
+        #    return true;
+        #}
+        #
+      ENDSOURCE
+      SOURCE #main
+        #static void main(args args)
+        #{
+        #    DAXDTable2FormWizard wizard = new DAXDTable2FormWizard();
+        #    TableName            tableName;
+        #    SysContextMenu       sysContextMenu;
+        #    TreeNode             treeNode;
+        #    ;
+        #
+        #    if (SysContextMenu::startedFrom(args))
+        #    {
+        #        sysContextMenu  = args.parmObject();
+        #        treeNode        = sysContextMenu.first();
+        #        if (treeNode)
+        #        {
+        #            tableName = treeNode.AOTname();
+        #            wizard.parmTableName(tableName);
+        #            wizard.parmFormTranslation(tableName);
+        #        }
+        #    }
+        #    else
+        #    {
+        #        throw error(error::wrongUseOfFunction(funcName()));
+        #    }
+        #
+        #    if (wizard.prompt())
+        #        wizard.run();
+        #}
+      ENDSOURCE
+    ENDMETHODS
+  ENDCLASS
+
 ***Element: FRM
 
 ; Microsoft Dynamics AX Forms unloaded
@@ -2173,7 +2907,7 @@ FORM #DAXDTable2FormWizard
     SOURCE #classDeclaration
       #class FormRun extends ObjectRun
       #{
-      #    DAXDTable2FormWizard sysWizard;
+      #    DAXDTable2FormWizard      sysWizard;
       #    DAXDTable2FormTranslation formTranslation;
       #}
       #
@@ -2182,12 +2916,13 @@ FORM #DAXDTable2FormWizard
       #void init()
       #{
       #    super();
-      #
       #    if (element.Args().caller())
       #    {
-      #        sysWizard = element.Args().caller();
+      #        sysWizard       = element.Args().caller();
+      #        formTranslation = sysWizard.parmFormTranslation(sysWizard.parmTableName());
       #
-      #        TableName.text(sysWizard.parmTableName());
+      #        TableName.text       (sysWizard.parmTableName());
+      #        TableDetailName.text (sysWizard.parmTableName());
       #
       #        element.setFields();
       #    }
@@ -2213,18 +2948,64 @@ FORM #DAXDTable2FormWizard
       #{
       #    if (TableName.text())
       #    {
-      #        formTranslation = DAXDTable2FormTranslation::construct(TableName.text());
+      #        //formTranslation = DAXDTable2FormTranslation::construct(TableName.text());
       #
-      #        FormName.text(formTranslation.getFormName());
-      #        FormLabel.text(formTranslation.getFormLabel());
-      #        FormStyle.selection(formTranslation.getFormStyle());
+      #        FormName.text(formTranslation.parmFormName());
+      #        FormLabel.text(formTranslation.parmFormLabel());
+      #        FormStyle.selection(formTranslation.parmFormStyle());
+      #    }
+      #
+      #    if (CreateDetailFormMaster.checked())
+      #    {
+      #        FormDetailName.enabled  (true);
+      #        FormDetailLabel.enabled (true);
+      #        FormDetailStyle.enabled (true);
+      #
+      #        if (!FormDetailName.text())
+      #        {
+      #            formTranslation.parmFormNameDetail(formTranslation.parmTableName());
+      #            FormDetailName.text  (formTranslation.parmFormNameDetail());
+      #        }
+      #
+      #        if (!FormDetailLabel.text())
+      #        {
+      #            formTranslation.parmFormLabelDetail(formTranslation.parmFormLabel());
+      #            FormDetailLabel.text (formTranslation.parmFormLabelDetail());
+      #        }
+      #
+      #        if (FormDetailStyle.selection() == FormStyle::Auto)
+      #        {
+      #            formTranslation.parmFormStyleDetail(FormStyle::DetailsFormMaster);
+      #            FormDetailStyle.selection(FormStyle::DetailsFormMaster);
+      #        }
+      #    }
+      #    else
+      #    {
+      #        FormDetailName.enabled  (false);
+      #        FormDetailLabel.enabled (false);
+      #        FormDetailStyle.enabled (false);
+      #
+      #        FormDetailName.text  ("");
+      #        FormDetailLabel.text ("");
+      #        FormDetailStyle.selection(FormStyle::Auto);
       #    }
       #}
     ENDSOURCE
     SOURCE #setTexts
       #void setTexts()
       #{
+      #    ;
+      #    switch (FormStyle.selection())
+      #    {
+      #        case FormStyle::ListPage:
+      #        case FormStyle::DetailsFormTransaction:
+      #            AlertText1.visible(true);
+      #            break;
       #
+      #        default:
+      #            AlertText1.visible(false);
+      #            break;
+      #    }
       #}
       #
     ENDSOURCE
@@ -2260,16 +3041,42 @@ FORM #DAXDTable2FormWizard
   
   DESIGN
     PROPERTIES
+      Width               #Column width
+      Height              #Column height
     ENDPROPERTIES
     
     CONTAINER
       CONTROL GROUP
         PROPERTIES
+          Name                #FormDetailGrp
+          ElementPosition     #1717986916
+          HierarchyParent     #Step3
+          Caption             #@SYS13403
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL GROUP
+        PROPERTIES
           Name                #FormGrp
           AutoDeclaration     #Yes
           ElementPosition     #1610612733
-          HierarchyParent     #TableTab
+          HierarchyParent     #Step2
           Caption             #Form details
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL GROUP
+        PROPERTIES
+          Name                #TableDetailGrp
+          ElementPosition     #1288490187
+          HierarchyParent     #Step3
+          Caption             #@SYS40151
         ENDPROPERTIES
         
         METHODS
@@ -2281,7 +3088,7 @@ FORM #DAXDTable2FormWizard
           Name                #TableGrp
           AutoDeclaration     #Yes
           ElementPosition     #1073741822
-          HierarchyParent     #TableTab
+          HierarchyParent     #Step2
           Caption             #@SYS40151
         ENDPROPERTIES
         
@@ -2291,9 +3098,9 @@ FORM #DAXDTable2FormWizard
       
       CONTROL GROUP
         PROPERTIES
-          Name                #WelcomeGrp
-          ElementPosition     #1431655764
-          HierarchyParent     #WelcomeTab
+          Name                #Texts
+          ElementPosition     #1879048189
+          HierarchyParent     #Step2
           FrameType           #None
         ENDPROPERTIES
         
@@ -2306,7 +3113,36 @@ FORM #DAXDTable2FormWizard
           Name                #Tab
           AutoDeclaration     #Yes
           Width               #Column width
+          Height              #Column height
           ElementPosition     #1073741823
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL TABPAGE
+        PROPERTIES
+          Name                #Step1
+          Width               #Column width
+          Height              #Column height
+          ElementPosition     #613566756
+          HierarchyParent     #Tab
+          Caption             #Step 1 Title
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL TABPAGE
+        PROPERTIES
+          Name                #Step2
+          Width               #Column width
+          Height              #Column height
+          ElementPosition     #920350134
+          HierarchyParent     #Tab
+          Caption             #Step 2 Title
         ENDPROPERTIES
         
         METHODS
@@ -2318,9 +3154,9 @@ FORM #DAXDTable2FormWizard
           Name                #Step3
           Width               #Column width
           Height              #Column height
-          ElementPosition     #1717986916
+          ElementPosition     #1227133512
           HierarchyParent     #Tab
-          Caption             #Step 3 Title
+          Caption             #Details form master setup
         ENDPROPERTIES
         
         METHODS
@@ -2329,12 +3165,12 @@ FORM #DAXDTable2FormWizard
       
       CONTROL TABPAGE
         PROPERTIES
-          Name                #TableTab
+          Name                #Step4
           Width               #Column width
           Height              #Column height
-          ElementPosition     #1288490187
+          ElementPosition     #1533916890
           HierarchyParent     #Tab
-          Caption             #@SYS12687
+          Caption             #Step 4 Title
         ENDPROPERTIES
         
         METHODS
@@ -2343,15 +3179,72 @@ FORM #DAXDTable2FormWizard
       
       CONTROL TABPAGE
         PROPERTIES
-          Name                #WelcomeTab
+          Name                #Step5
           Width               #Column width
           Height              #Column height
+          ElementPosition     #1840700268
+          HierarchyParent     #Tab
+          Caption             #Step 5 Title
+        ENDPROPERTIES
+        
+        METHODS
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL CHECKBOX
+        PROPERTIES
+          Name                #CreateDetailFormMaster
+          AutoDeclaration     #Yes
           ElementPosition     #858993458
-          HierarchyParent     #Tab
-          Caption             #@SYS27227
+          HierarchyParent     #Step3
+          Label               #Create detail form master
         ENDPROPERTIES
         
         METHODS
+          SOURCE #modified
+            #public boolean modified()
+            #{
+            #    boolean ret;
+            #    ;
+            #
+            #    ret = super();
+            #
+            #    formTranslation.parmCreateDetailFormMaster(this.checked());
+            #
+            #    element.setFields();
+            #
+            #    return ret;
+            #}
+          ENDSOURCE
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL COMBOBOX
+        PROPERTIES
+          Name                #FormDetailStyle
+          AutoDeclaration     #Yes
+          Width               #200
+          ElementPosition     #1717986916
+          HierarchyParent     #FormDetailGrp
+          Label               #@SYS341942
+          EnumType            #FormStyle
+        ENDPROPERTIES
+        
+        METHODS
+          SOURCE #selectionChange
+            #public int selectionChange()
+            #{
+            #    int ret;
+            #    ;
+            #
+            #    ret = super();
+            #
+            #    formTranslation.parmFormStyle(this.selection());
+            #    element.setTexts();
+            #
+            #    return ret;
+            #}
+          ENDSOURCE
         ENDMETHODS
       ENDCONTROL 
       
@@ -2359,6 +3252,7 @@ FORM #DAXDTable2FormWizard
         PROPERTIES
           Name                #FormStyle
           AutoDeclaration     #Yes
+          Width               #200
           ElementPosition     #1717986916
           HierarchyParent     #FormGrp
           Label               #@SYS341942
@@ -2366,42 +3260,97 @@ FORM #DAXDTable2FormWizard
         ENDPROPERTIES
         
         METHODS
+          SOURCE #selectionChange
+            #public int selectionChange()
+            #{
+            #    int ret;
+            #    ;
+            #
+            #    ret = super();
+            #
+            #    formTranslation.parmFormStyle(this.selection());
+            #    element.setTexts();
+            #
+            #    return ret;
+            #}
+          ENDSOURCE
         ENDMETHODS
       ENDCONTROL 
       
       CONTROL STATICTEXT
         PROPERTIES
-          Name                #WelcomeText1
-          ElementPosition     #858993458
-          HierarchyParent     #WelcomeGrp
-          Text                #Use this assistent to generate display elements from a table (form, menuitem, listpage class).
+          Name                #AlertText1
+          AutoDeclaration     #Yes
+          Visible             #No
+          ElementPosition     #1431655764
+          HierarchyParent     #Texts
+          Text                #Texto de teste para alerta do tipo de form style
+          ColorScheme         #RGB
+          BackStyle           #Opaque
+          BackgroundColor     #255 255 128
+          ForegroundColor     #20 0 0
         ENDPROPERTIES
         
         METHODS
         ENDMETHODS
       ENDCONTROL 
       
-      CONTROL STATICTEXT
+      CONTROL STRINGEDIT
         PROPERTIES
-          Name                #WelcomeText2
+          Name                #FormDetailLabel
+          AutoDeclaration     #Yes
+          Width               #200
           ElementPosition     #1288490187
-          HierarchyParent     #WelcomeGrp
-          Text                #Its important to fully configurate the table before to use this assistent. Some properties are mandadory, such as: label, table group and title field 1.
+          HierarchyParent     #FormDetailGrp
+          Label               #@SYS25058
         ENDPROPERTIES
         
         METHODS
+          SOURCE #modified
+            #public boolean modified()
+            #{
+            #    boolean ret;
+            #    ;
+            #
+            #    ret = super();
+            #
+            #    formTranslation.parmFormLabel(this.text());
+            #
+            #    return ret;
+            #}
+          ENDSOURCE
         ENDMETHODS
       ENDCONTROL 
       
-      CONTROL STATICTEXT
+      CONTROL STRINGEDIT
         PROPERTIES
-          Name                #WelcomeText3
-          ElementPosition     #1717986916
-          HierarchyParent     #WelcomeGrp
-          Text                #@SYS53990
+          Name                #FormDetailName
+          AutoDeclaration     #Yes
+          Width               #200
+          ElementPosition     #858993458
+          HierarchyParent     #FormDetailGrp
+          Label               #@SYS117778
+          ExtendedDataType    
+            ARRAY 
+              #Name
+              #
+            ENDARRAY
         ENDPROPERTIES
         
         METHODS
+          SOURCE #modified
+            #public boolean modified()
+            #{
+            #    boolean ret;
+            #    ;
+            #
+            #    ret = super();
+            #
+            #    formTranslation.parmFormName(this.text());
+            #
+            #    return ret;
+            #}
+          ENDSOURCE
         ENDMETHODS
       ENDCONTROL 
       
@@ -2409,12 +3358,26 @@ FORM #DAXDTable2FormWizard
         PROPERTIES
           Name                #FormLabel
           AutoDeclaration     #Yes
+          Width               #200
           ElementPosition     #1288490187
           HierarchyParent     #FormGrp
           Label               #@SYS25058
         ENDPROPERTIES
         
         METHODS
+          SOURCE #modified
+            #public boolean modified()
+            #{
+            #    boolean ret;
+            #    ;
+            #
+            #    ret = super();
+            #
+            #    formTranslation.parmFormLabel(this.text());
+            #
+            #    return ret;
+            #}
+          ENDSOURCE
         ENDMETHODS
       ENDCONTROL 
       
@@ -2422,6 +3385,7 @@ FORM #DAXDTable2FormWizard
         PROPERTIES
           Name                #FormName
           AutoDeclaration     #Yes
+          Width               #200
           ElementPosition     #858993458
           HierarchyParent     #FormGrp
           Label               #@SYS117778
@@ -2433,6 +3397,34 @@ FORM #DAXDTable2FormWizard
         ENDPROPERTIES
         
         METHODS
+          SOURCE #modified
+            #public boolean modified()
+            #{
+            #    boolean ret;
+            #    ;
+            #
+            #    ret = super();
+            #
+            #    formTranslation.parmFormName(this.text());
+            #
+            #    return ret;
+            #}
+          ENDSOURCE
+        ENDMETHODS
+      ENDCONTROL 
+      
+      CONTROL STRINGEDIT
+        PROPERTIES
+          Name                #TableDetailName
+          AutoDeclaration     #Yes
+          Width               #200
+          Enabled             #No
+          ElementPosition     #1431655764
+          HierarchyParent     #TableDetailGrp
+          Label               #@SYS17421
+        ENDPROPERTIES
+        
+        METHODS
         ENDMETHODS
       ENDCONTROL 
       
@@ -2440,6 +3432,7 @@ FORM #DAXDTable2FormWizard
         PROPERTIES
           Name                #TableName
           AutoDeclaration     #Yes
+          Width               #200
           Enabled             #No
           ElementPosition     #1431655764
           HierarchyParent     #TableGrp
@@ -3193,11 +4186,9 @@ ENDFORM
     Type: 1
     PROPERTIES
       Name                #DAXDTable2FormWizard
-      Label               #New form
-      HelpText            #Generate form from table
       ObjectType          #Class
       Object              #DAXDTable2FormWizard
-      Origin              #{AC6FC741-64C6-4B41-B544-45569FF42D9B}
+      Origin              #{D7B430CD-FF20-45AB-BA87-32AE3DF76897}
     ENDPROPERTIES
     
   ENDMENUITEM
@@ -3257,6 +4248,37 @@ ENDFORM
   ENDPROPERTIES
   
     PROJECTCLASS ProjectNode
+    GROUP #DEL
+      PROPERTIES
+        Name                #DEL
+        ProjectGroupType    #All
+        GroupMask           #
+        PreventEditProperties #No
+      ENDPROPERTIES
+      
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 45
+        UTILOBJECTID 1027003
+        NODETYPE 329
+        NAME #DEL_DAXDTable2FormWizard
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 11
+        UTILOBJECTID 0
+        NODETYPE 201
+        NAME #DEL_DAXDTable2FormWizard
+      ENDNODE
+      BEGINNODE
+        FILETYPE 0
+        UTILTYPE 1
+        UTILOBJECTID 0
+        NODETYPE 296
+        NAME #DEL_DAXDTable2FormWizard
+      ENDNODE
+      ENDGROUP
+      
     GROUP #Test_Tables
       PROPERTIES
         Name                #Test_Tables
@@ -3355,16 +4377,16 @@ ENDFORM
       BEGINNODE
         FILETYPE 0
         UTILTYPE 45
-        UTILOBJECTID 1027003
+        UTILOBJECTID 968
         NODETYPE 329
-        NAME #DAXDTable2FormWizard
+        NAME #SysContextMenu
       ENDNODE
       BEGINNODE
         FILETYPE 0
         UTILTYPE 45
-        UTILOBJECTID 968
+        UTILOBJECTID 1027013
         NODETYPE 329
-        NAME #SysContextMenu
+        NAME #DAXDTable2FormWizard
       ENDNODE
       ENDGROUP
       
@@ -3410,10 +4432,10 @@ ENDFORM
         PreventEditProperties #No
       ENDPROPERTIES
       
-      GROUP #Display
+      GROUP #Action
         PROPERTIES
-          Name                #Display
-          ProjectGroupType    #Display
+          Name                #Action
+          ProjectGroupType    #Action
           GroupMask           #
           PreventEditProperties #No
         ENDPROPERTIES
