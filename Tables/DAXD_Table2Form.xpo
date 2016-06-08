@@ -337,12 +337,17 @@ Formatversion: 1
         #    ;
         #
         #    this.createListPageQuery();
+        #
+        #    // Todo Commet due error displayed when listpage is open. Fix it later.
         #    //this.createListPageClass();
         #
         #    super();
         #}
       ENDSOURCE
       SOURCE #createFormDetail
+        #/// <summary>
+        #/// Creates the form details (master or transaction).
+        #/// </summary>
         #private void createFormDetail()
         #{
         #    DAXDTable2FormTranslation formTranslationDetail = DAXDTable2FormTranslation::construct(this.parmFormTranslation().parmTableName());
@@ -359,6 +364,13 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #createListPageClass
+        #/// <summary>
+        #/// Creates interaction class to be used in listpage form.
+        #/// </summary>
+        #/// <remarks>
+        #/// The code is done. However, an error is displayed when listpage is opened.
+        #/// This is method is called from createForm method, commented though.
+        #/// </remarks>
         #private void createListPageClass()
         #{
         #    #AOT
@@ -381,9 +393,13 @@ Formatversion: 1
         #    node.AOTsetSource(classDeclarationSource);
         #    node.AOTsave();
         #    node.AOTcompile();
+        #    node.AOTnewWindow();
         #}
       ENDSOURCE
       SOURCE #createListPageQuery
+        #/// <summary>
+        #/// Creates query to be used in listpage as data source.
+        #/// </summary>
         #private void createListPageQuery()
         #{
         #    #AOT
@@ -412,6 +428,7 @@ Formatversion: 1
         #    nodeFields.AOTsave();
         #
         #    nodeListPageInteractionQuery.AOTsave();
+        #    nodeListPageInteractionQuery.AOTnewWindow();
         #}
       ENDSOURCE
       SOURCE #createOtherForms
@@ -2832,6 +2849,7 @@ FORM #DAXDTable2FormWizard
     PROPERTIES
       Width               #Column width
       Height              #Column height
+      Caption             #Table 2 Form
     ENDPROPERTIES
     
     CONTAINER
