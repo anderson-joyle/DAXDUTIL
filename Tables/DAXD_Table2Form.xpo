@@ -1,391 +1,6 @@
 ﻿Exportfile for AOT version 1.0 or later
 Formatversion: 1
 
-***Element: DBT
-
-; Microsoft Dynamics AX Table : TSTMainTable unloaded
-; --------------------------------------------------------------------------------
-  TABLEVERSION 1
-  
-  TABLE #TSTMainTable
-    EnforceFKRelation 1
-    PROPERTIES
-      Name                #TSTMainTable
-      Label               #Cadastro de principais financiadores
-      CreateRecIdIndex    #Yes
-      TableGroup          #Main
-      PrimaryIndex        #SurrogateKey
-      ClusterIndex        #SurrogateKey
-      Origin              #{322F60FF-E5D9-4CC5-A397-210242B78D6B}
-    ENDPROPERTIES
-    
-    FIELDS
-      FIELD #AccountNum
-        STRING
-        PROPERTIES
-          Name                #AccountNum
-          Table               #TSTMainTable
-          Origin              #{1EE4F8B7-AD7F-40BF-91F0-4E1CF2C9DDC8}
-          ExtendedDataType    #AccountNum
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #Name
-        STRING
-        PROPERTIES
-          Name                #Name
-          Table               #TSTMainTable
-          Origin              #{DF86D1DE-A463-405B-99F6-269E8C341C9E}
-          ExtendedDataType    #Name
-          StringSize          #60
-        ENDPROPERTIES
-        
-      FIELD #NameAlias
-        STRING
-        PROPERTIES
-          Name                #NameAlias
-          Table               #TSTMainTable
-          Origin              #{A2B709A8-E37D-4652-8CDD-57ABAF7D92AC}
-          ExtendedDataType    #NameAlias
-          StringSize          #20
-        ENDPROPERTIES
-        
-    ENDFIELDS
-    GROUPS
-      GROUP #AutoLookup
-        PROPERTIES
-          Name                #AutoLookup
-        ENDPROPERTIES
-        
-        GROUPFIELDS
-          #AccountNum
-          #Name
-          #NameAlias
-        ENDGROUPFIELDS
-      ENDGROUP
-    ENDGROUPS
-    
-    INDICES
-      #Index1
-      PROPERTIES
-        Name                #Index1
-        Origin              #{31B70D7B-9FE8-4CA8-B412-C0C66C493330}
-      ENDPROPERTIES
-      
-      INDEXFIELDS
-      ENDINDEXFIELDS
-      
-    ENDINDICES
-    FULLTEXTINDICES
-    ENDFULLTEXTINDICES
-    REFERENCES
-      REFERENCE #TSTTransactionTable
-        PROPERTIES
-          Name                #TSTTransactionTable
-          Table               #TSTTransactionTable
-          UseDefaultRoleNames #Yes
-        ENDPROPERTIES
-        
-        FIELDREFERENCES
-          REFERENCETYPE NORMAL
-          PROPERTIES
-            Field               #AccountNum
-            RelatedField        #AccountNum
-          ENDPROPERTIES
-          
-        ENDFIELDREFERENCES
-      ENDREFERENCE
-    ENDREFERENCES
-    
-    DELETEACTIONS
-    ENDDELETEACTIONS
-    
-    METHODS
-    ENDMETHODS
-  ENDTABLE
-  
-
-***Element: DBT
-
-; Microsoft Dynamics AX Table : TSTSimpleListTable unloaded
-; --------------------------------------------------------------------------------
-  TABLEVERSION 1
-  
-  TABLE #TSTSimpleListTable
-    EnforceFKRelation 1
-    PROPERTIES
-      Name                #TSTSimpleListTable
-      Label               #Cadastro de principais financiadores
-      TitleField1         #AccountNum
-      TitleField2         #Name
-      CreateRecIdIndex    #Yes
-      TableGroup          #Transaction
-      PrimaryIndex        #SurrogateKey
-      ClusterIndex        #SurrogateKey
-      Origin              #{3FFF55A3-2F02-435F-80B1-D0D6A3720956}
-    ENDPROPERTIES
-    
-    FIELDS
-      FIELD #AccountNum
-        STRING
-        PROPERTIES
-          Name                #AccountNum
-          Table               #TSTSimpleListTable
-          Origin              #{1CAAAD76-E606-4299-B23A-DC58E9ADD273}
-          ExtendedDataType    #AccountNum
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #InvoiceId
-        STRING
-        PROPERTIES
-          Name                #InvoiceId
-          Table               #TSTSimpleListTable
-          Origin              #{4AF13EF7-317D-4A0D-A690-BBDFFB3C60C1}
-          ExtendedDataType    #InvoiceId
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #Name
-        STRING
-        PROPERTIES
-          Name                #Name
-          Table               #TSTSimpleListTable
-          Origin              #{1EBBC843-C6C0-42FE-950C-E9FCD8BB470B}
-          ExtendedDataType    #Name
-          StringSize          #60
-        ENDPROPERTIES
-        
-      FIELD #NameAlias
-        STRING
-        PROPERTIES
-          Name                #NameAlias
-          Table               #TSTSimpleListTable
-          Origin              #{0B9281A6-9F4B-4B07-87CE-02518C09F76D}
-          ExtendedDataType    #NameAlias
-          StringSize          #20
-        ENDPROPERTIES
-        
-    ENDFIELDS
-    GROUPS
-      GROUP #AutoLookup
-        PROPERTIES
-          Name                #AutoLookup
-        ENDPROPERTIES
-        
-        GROUPFIELDS
-          #AccountNum
-          #Name
-          #NameAlias
-          #InvoiceId
-        ENDGROUPFIELDS
-      ENDGROUP
-    ENDGROUPS
-    
-    INDICES
-    ENDINDICES
-    FULLTEXTINDICES
-    ENDFULLTEXTINDICES
-    REFERENCES
-    ENDREFERENCES
-    
-    DELETEACTIONS
-    ENDDELETEACTIONS
-    
-    METHODS
-    ENDMETHODS
-  ENDTABLE
-  
-
-***Element: DBT
-
-; Microsoft Dynamics AX Table : TSTTransactionTable unloaded
-; --------------------------------------------------------------------------------
-  TABLEVERSION 1
-  
-  TABLE #TSTTransactionTable
-    EnforceFKRelation 1
-    PROPERTIES
-      Name                #TSTTransactionTable
-      Label               #Cadastro de principais financiadores
-      TitleField1         #AccountNum
-      CreateRecIdIndex    #Yes
-      TableGroup          #Transaction
-      PrimaryIndex        #SurrogateKey
-      ClusterIndex        #SurrogateKey
-      Origin              #{F541E400-5D8F-4C7C-9704-257E32695C68}
-    ENDPROPERTIES
-    
-    FIELDS
-      FIELD #AccountNum
-        STRING
-        PROPERTIES
-          Name                #AccountNum
-          Table               #TSTTransactionTable
-          Origin              #{9DA5EBC9-1692-4E4C-9A43-C04906003C78}
-          ExtendedDataType    #AccountNum
-          StringSize          #20
-        ENDPROPERTIES
-        
-      FIELD #AmountCur
-        REAL
-        PROPERTIES
-          Name                #AmountCur
-          Table               #TSTTransactionTable
-          Origin              #{0C2D6252-8CD3-45BC-8033-9FEEF64FD908}
-          ExtendedDataType    #AmountCur
-        ENDPROPERTIES
-        
-      FIELD #InvoiceId
-        STRING
-        PROPERTIES
-          Name                #InvoiceId
-          Table               #TSTTransactionTable
-          Origin              #{D167DC50-AF90-48BC-95C0-9BEADCD57483}
-          ExtendedDataType    #InvoiceId
-          StringSize          #20
-        ENDPROPERTIES
-        
-    ENDFIELDS
-    GROUPS
-      GROUP #AutoLookup
-        PROPERTIES
-          Name                #AutoLookup
-        ENDPROPERTIES
-        
-        GROUPFIELDS
-          #AccountNum
-          #InvoiceId
-        ENDGROUPFIELDS
-      ENDGROUP
-    ENDGROUPS
-    
-    INDICES
-    ENDINDICES
-    FULLTEXTINDICES
-    ENDFULLTEXTINDICES
-    REFERENCES
-    ENDREFERENCES
-    
-    DELETEACTIONS
-    ENDDELETEACTIONS
-    
-    METHODS
-    ENDMETHODS
-  ENDTABLE
-  
-
-***Element: DBT
-
-; Microsoft Dynamics AX Table : TSTTableOfContentTable unloaded
-; --------------------------------------------------------------------------------
-  TABLEVERSION 1
-  
-  TABLE #TSTTableOfContentTable
-    EnforceFKRelation 1
-    PROPERTIES
-      Name                #TSTTableOfContentTable
-      Label               #Uma tabela de teste que simula uma de parametro
-      TitleField1         #BOLcarrierName
-      TitleField2         #BOLfreightChargeTerms
-      CreateRecIdIndex    #Yes
-      TableGroup          #Parameter
-      PrimaryIndex        #SurrogateKey
-      ClusterIndex        #SurrogateKey
-      Origin              #{2458302B-BABC-4115-829F-866FFB254C0B}
-    ENDPROPERTIES
-    
-    FIELDS
-      FIELD #BOLcarrierName
-        STRING
-        PROPERTIES
-          Name                #BOLcarrierName
-          Table               #TSTTableOfContentTable
-          IgnoreEDTRelation   #Yes
-          Origin              #{68A183EB-705B-4A81-9C54-B9B9AEDB0E45}
-          ExtendedDataType    #WMSCarrierName
-          StringSize          #140
-        ENDPROPERTIES
-        
-      FIELD #BOLfreightChargeTerms
-        ENUM
-        PROPERTIES
-          Name                #BOLfreightChargeTerms
-          Table               #TSTTableOfContentTable
-          Origin              #{C7A16811-8706-4E7C-B82F-7E25A036A31F}
-          EnumType            #WMSFreightChargeTerms
-        ENDPROPERTIES
-        
-      FIELD #BOLfreightCounted
-        ENUM
-        PROPERTIES
-          Name                #BOLfreightCounted
-          Table               #TSTTableOfContentTable
-          Origin              #{7A9F4CA7-8F9D-47D9-A1F9-A6FA92E3E33C}
-          EnumType            #WMSFreightCounted
-        ENDPROPERTIES
-        
-      FIELD #BOLFreightedBy
-        ENUM
-        PROPERTIES
-          Name                #BOLFreightedBy
-          Table               #TSTTableOfContentTable
-          Origin              #{4D94A788-45DE-4159-907C-CF55CCF649DC}
-          EnumType            #WMSFreightedBy
-        ENDPROPERTIES
-        
-      FIELD #BOLlanguageId
-        STRING
-        PROPERTIES
-          Name                #BOLlanguageId
-          ConfigurationKey    #SalesShipments
-          Table               #TSTTableOfContentTable
-          IgnoreEDTRelation   #Yes
-          Origin              #{2F4F92CA-9123-42E8-BB6D-ECFE5C9B7E4B}
-          ExtendedDataType    #LanguageId
-          StringSize          #7
-        ENDPROPERTIES
-        
-      FIELD #BOLtrailerLoaded
-        ENUM
-        PROPERTIES
-          Name                #BOLtrailerLoaded
-          Table               #TSTTableOfContentTable
-          Origin              #{FF9C3EF4-9952-4602-8049-C067CF63EFF5}
-          EnumType            #WMSTrailerLoaded
-        ENDPROPERTIES
-        
-      FIELD #Key
-        INT
-        PROPERTIES
-          Name                #Key
-          AllowEditOnCreate   #No
-          AllowEdit           #No
-          Visible             #No
-          Table               #TSTTableOfContentTable
-          Origin              #{AEE9DD0E-A655-4662-BDDC-3CE425887750}
-          ExtendedDataType    #ParametersKey
-        ENDPROPERTIES
-        
-    ENDFIELDS
-    GROUPS
-    ENDGROUPS
-    
-    INDICES
-    ENDINDICES
-    FULLTEXTINDICES
-    ENDFULLTEXTINDICES
-    REFERENCES
-    ENDREFERENCES
-    
-    DELETEACTIONS
-    ENDDELETEACTIONS
-    
-    METHODS
-    ENDMETHODS
-  ENDTABLE
-  
-
 ***Element: CLS
 
 ; Microsoft Dynamics AX Class: DAXDTable2FormCreate descarregado
@@ -399,55 +14,10 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
-      SOURCE #setTabControl
-        #/// <summary>
-        #/// Add AutoIdentification table group to tab general
-        #/// </summary>
-        #/// <remarks>
-        #/// At the moment, this function isn't working 'cause the lack of knowledge of
-        #/// how to insert a group control to a table via X++
-        #/// </remarks>
-        #public void setTabControl()
-        #{
-        #    //throw error(error::missingOverride(funcName()));
-        #}
-      ENDSOURCE
-      SOURCE #hasTabGeneral
-        #private boolean hasTabGeneral()
-        #{
-        #    boolean ret = false;
-        #    ;
-        #
-        #    switch (this.parmFormTranslation().parmFormStyle())
-        #    {
-        #        case FormStyle::DetailsFormMaster:      // HeaderGeneral
-        #        case FormStyle::SimpleListDetails:      // TabPage
-        #        case FormStyle::TableOfContents:        // TOCPage1
-        #        case FormStyle::DetailsFormTransaction: // HeaderGeneral
-        #            ret = true;
-        #            break;
-        #    }
-        #
-        #    return ret;
-        #}
-      ENDSOURCE
-      SOURCE #setControls
-        #private void setControls()
-        #{
-        #    ;
-        #
-        #    if (this.hasGrid())
-        #    {
-        #        this.setGrid();
-        #    }
-        #
-        #    if (this.hasTabGeneral())
-        #    {
-        #        this.setGrid();
-        #    }
-        #}
-      ENDSOURCE
       SOURCE #classDeclaration
+        #/// <summary>
+        #/// Auto-creates form from table definition
+        #/// </summary>
         #abstract class DAXDTable2FormCreate
         #{
         #    DAXDTable2FormTranslation formTransLation;
@@ -456,6 +26,12 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #create
+        #/// <summary>
+        #/// Starts the process, calling eatch step at time.
+        #/// </summary>
+        #/// <remarks>
+        #///
+        #/// </remarks>
         #public void create()
         #{
         #    this.createForm();
@@ -468,6 +44,12 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #createForm
+        #/// <summary>
+        #/// Creates the main form.
+        #/// </summary>
+        #/// <remarks>
+        #///
+        #/// </remarks>
         #public void createForm()
         #{
         #    TreeNode nodeDefaultBPnode = DAXDTable2FormUtil::getDefaultStyleFormNode(this.parmFormTranslation().parmFormStyle());
@@ -489,6 +71,9 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #createMenuItem
+        #/// <summary>
+        #/// Creates form's display menu item.
+        #/// </summary>
         #protected void createMenuItem()
         #{
         #    TreeNode node = DAXDTable2FormUtil::getMenuItemDisplayNode();
@@ -505,11 +90,24 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #createOtherForms
+        #/// <summary>
+        #/// Creates child form.
+        #/// </summary>
+        #/// <remarks>
+        #/// If main form has child form (i.e. ListPage).
+        #/// </remarks>
         #protected void createOtherForms()
         #{
         #}
       ENDSOURCE
       SOURCE #hasGrid
+        #/// <summary>
+        #/// Checks if form template has grid to setup it.
+        #/// </summary>
+        #/// <returns>
+        #/// True: has grid
+        #/// False: hasn't grid
+        #/// </returns>
         #private boolean hasGrid()
         #{
         #    boolean ret = false;
@@ -529,7 +127,36 @@ Formatversion: 1
         #    return ret;
         #}
       ENDSOURCE
+      SOURCE #hasTabGeneral
+        #/// <summary>
+        #/// Checks if form template has tab page general to setup it.
+        #/// </summary>
+        #/// <returns>
+        #/// True: has tab page
+        #/// False: hasn't tab page
+        #/// </returns>
+        #private boolean hasTabGeneral()
+        #{
+        #    boolean ret = false;
+        #    ;
+        #
+        #    switch (this.parmFormTranslation().parmFormStyle())
+        #    {
+        #        case FormStyle::DetailsFormMaster:      // HeaderGeneral
+        #        case FormStyle::SimpleListDetails:      // TabPage
+        #        case FormStyle::TableOfContents:        // TOCPage1
+        #        case FormStyle::DetailsFormTransaction: // HeaderGeneral
+        #            ret = true;
+        #            break;
+        #    }
+        #
+        #    return ret;
+        #}
+      ENDSOURCE
       SOURCE #openNewForm
+        #/// <summary>
+        #/// Open main form, once created.
+        #/// </summary>
         #public void openNewForm()
         #{
         #    ;
@@ -547,7 +174,32 @@ Formatversion: 1
         #    return formTranslation;
         #}
       ENDSOURCE
+      SOURCE #setControls
+        #/// <summary>
+        #/// Set controls to each form template.
+        #/// </summary>
+        #private void setControls()
+        #{
+        #    ;
+        #
+        #    if (this.hasGrid())
+        #    {
+        #        this.setGrid();
+        #    }
+        #
+        #    if (this.hasTabGeneral())
+        #    {
+        #        this.setGrid();
+        #    }
+        #}
+      ENDSOURCE
       SOURCE #setDataSources
+        #/// <summary>
+        #/// Set main form data source;
+        #/// </summary>
+        #/// <remarks>
+        #/// Linked data sources can be set in child classes.
+        #/// </remarks>
         #public void setDataSources()
         #{
         #    TreeNode    node = DAXDTable2FormUtil::getFormDataSourceNode(this.parmFormTranslation().parmFormName());
@@ -561,6 +213,9 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #setDesign
+        #/// <summary>
+        #/// Setup main form design property.
+        #/// </summary>
         #public void setDesign()
         #{
         #    TreeNode node = DAXDTable2FormUtil::getFormDesignNode(this.parmFormTranslation().parmFormName());
@@ -571,12 +226,43 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #setGrid
+        #/// <summary>
+        #/// If exists, sets form grid properties.
+        #/// </summary>
+        #/// <remarks>
+        #///
+        #/// </remarks>
+        #/// <exception cref="Exception::Error">
+        #/// If form child as grid and has not been extended.
+        #/// </exception>
         #public void setGrid()
         #{
         #    throw error(error::missingOverride(funcName()));
         #}
       ENDSOURCE
+      SOURCE #setTabControl
+        #/// <summary>
+        #/// Add AutoIdentification table group to tab general
+        #/// </summary>
+        #/// <remarks>
+        #/// At the moment, this function isn't working 'cause the lack of knowledge of
+        #/// how to insert a group control to a table via X++
+        #/// </remarks>
+        #public void setTabControl()
+        #{
+        #    //throw error(error::missingOverride(funcName()));
+        #}
+      ENDSOURCE
       SOURCE #construct
+        #/// <summary>
+        #/// Initialize table 2 form process.
+        #/// </summary>
+        #/// <param name="_formTranslation">
+        #/// Class with creation details.
+        #/// </param>
+        #/// <returns>
+        #/// Class instance
+        #/// </returns>
         #public static DAXDTable2FormCreate construct(DAXDTable2FormTranslation _formTranslation)
         #{
         #    DAXDTable2FormCreate obj = DAXDTable2FormUtil::newTable2FormCreate(_formTranslation.parmFormStyle());
@@ -740,6 +426,9 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #hookFormDetail
+        #/// <summary>
+        #/// Hooks child forms with main form
+        #/// </summary>
         #private void hookFormDetail()
         #{
         #    TreeNode node;
@@ -892,18 +581,6 @@ Formatversion: 1
         #    TreeNode nodeListPageInteractionQuery;
         #}
       ENDSOURCE
-      SOURCE #create
-        #public void create()
-        #{
-        #    ;
-        #    super();
-        #
-        #    if (this.parmFormTranslation().parmCreateDetailFormMaster())
-        #    {
-        #        this.hookFormDetail();
-        #    }
-        #}
-      ENDSOURCE
       SOURCE #createFormDetail
         #private void createFormDetail()
         #{
@@ -986,30 +663,6 @@ Formatversion: 1
         #    }
         #}
       ENDSOURCE
-      SOURCE #hookFormDetail
-        #private void hookFormDetail()
-        #{
-        #    TreeNode node;
-        #    ;
-        #
-        #    if (DAXDTable2FormUtil::getMenuItemDisplayNode(this.parmFormTranslation().parmFormNameDetail()))
-        #    {
-        #        node = DAXDTable2FormUtil::getFormControlNode(this.parmFormTranslation().parmFormName(), "EditButton");
-        #
-        #        if (node)
-        #        {
-        #            node.AOTsetProperty("MenuItemName", this.parmFormTranslation().parmFormNameDetail());
-        #        }
-        #
-        #        node = DAXDTable2FormUtil::getFormControlNode(this.parmFormTranslation().parmFormName(), "ViewButton");
-        #
-        #        if (node)
-        #        {
-        #            node.AOTsetProperty("MenuItemName", this.parmFormTranslation().parmFormNameDetail());
-        #        }
-        #    }
-        #}
-      ENDSOURCE
       SOURCE #setDataSources
         #public void setDataSources()
         #{
@@ -1019,12 +672,15 @@ Formatversion: 1
         #
         #    super();
         #
-        #    nodeDataSource = node.AOTadd(this.parmFormTranslation().parmTableTransactionName());
-        #    nodeDataSource.AOTsetProperty("Name", this.parmFormTranslation().parmTableTransactionName());
-        #    nodeDataSource.AOTsetProperty("Table", this.parmFormTranslation().parmTableTransactionName());
-        #    nodeDataSource.AOTsetProperty("JoinSource", this.parmFormTranslation().parmTableName());
-        #    nodeDataSource.AOTsetProperty("LinkType", "Delayed");
-        #    nodeDataSource.AOTsave();
+        #    if (this.parmFormTranslation().parmTableTransactionName())
+        #    {
+        #        nodeDataSource = node.AOTadd(this.parmFormTranslation().parmTableTransactionName());
+        #        nodeDataSource.AOTsetProperty("Name", this.parmFormTranslation().parmTableTransactionName());
+        #        nodeDataSource.AOTsetProperty("Table", this.parmFormTranslation().parmTableTransactionName());
+        #        nodeDataSource.AOTsetProperty("JoinSource", this.parmFormTranslation().parmTableName());
+        #        nodeDataSource.AOTsetProperty("LinkType", "Delayed");
+        #        nodeDataSource.AOTsave();
+        #    }
         #}
       ENDSOURCE
       SOURCE #setGrid
@@ -1046,13 +702,16 @@ Formatversion: 1
         #    nodeGrid.AOTsetProperty("DataGroup", "AutoLookup");
         #    nodeGrid.AOTsave();
         #
-        #    // Set line grid
-        #    nodeGrid = DAXDTable2FormUtil::getFormControlNode(this.parmFormTranslation().parmFormName(),
-        #                                                   "LinesGrid");
+        #    // If has transaction data source, set line grid
+        #    if (this.parmFormTranslation().parmTableTransactionName())
+        #    {
+        #        nodeGrid = DAXDTable2FormUtil::getFormControlNode(this.parmFormTranslation().parmFormName(),
+        #                                                       "LinesGrid");
         #
-        #    nodeGrid.AOTsetProperty("DataSource", this.parmFormTranslation().parmTableTransactionName());
-        #    nodeGrid.AOTsetProperty("DataGroup", "AutoLookup");
-        #    nodeGrid.AOTsave();
+        #        nodeGrid.AOTsetProperty("DataSource", this.parmFormTranslation().parmTableTransactionName());
+        #        nodeGrid.AOTsetProperty("DataGroup", "AutoLookup");
+        #        nodeGrid.AOTsave();
+        #    }
         #}
       ENDSOURCE
     ENDMETHODS
@@ -1158,11 +817,23 @@ Formatversion: 1
     
     METHODS
       SOURCE #classDeclaration
+        #/// <summary>
+        #/// Helper to find nodes in AOT and other stuff.
+        #/// </summary>
         #class DAXDTable2FormUtil
         #{
         #}
       ENDSOURCE
       SOURCE #createAutoForm
+        #/// <summary>
+        #/// Creates a default form.
+        #/// </summary>
+        #/// <param name="_formName">
+        #/// Form's name.
+        #/// </param>
+        #/// <returns>
+        #/// AOT node created form.
+        #/// </returns>
         #public static TreeNode createAutoForm(Name _formName)
         #{
         #    #AOT
@@ -1176,6 +847,15 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #getClassDeclarationNode
+        #/// <summary>
+        #/// Gets class ClassDeclaration method AOT node.
+        #/// </summary>
+        #/// <param name="_className">
+        #/// Class's name.
+        #/// </param>
+        #/// <returns>
+        #/// AOT path node.
+        #/// </returns>
         #public static TreeNode getClassDeclarationNode(Name _className)
         #{
         #    #AOT
@@ -1189,6 +869,18 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #getDefaultStyleFormNode
+        #/// <summary>
+        #/// Finds form template from form style enum.
+        #/// </summary>
+        #/// <param name="_formStyle">
+        #/// Form style.
+        #/// </param>
+        #/// <returns>
+        #/// Form template AOT path node.
+        #/// </returns>
+        #/// <exception cref="Exception::Error">
+        #/// Form style not mapped.
+        #/// </exception>
         #public static TreeNode getDefaultStyleFormNode(FormStyle _formStyle)
         #{
         #    #AOT
@@ -1243,6 +935,18 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #getFormControlNode
+        #/// <summary>
+        #/// Finds control AOT path node inside form.
+        #/// </summary>
+        #/// <param name="_formName">
+        #/// Form name.
+        #/// </param>
+        #/// <param name="_controlName">
+        #/// Form control name.
+        #/// </param>
+        #/// <returns>
+        #/// AOT path node.
+        #/// </returns>
         #public static TreeNode getFormControlNode(Name _formName, Name _controlName)
         #{
         #    #AOT
@@ -1256,6 +960,15 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #getFormDataSourceNode
+        #/// <summary>
+        #/// Finds form data source AOT path node.
+        #/// </summary>
+        #/// <param name="_formName">
+        #/// Form name.
+        #/// </param>
+        #/// <returns>
+        #/// AOT path node.
+        #/// </returns>
         #public static TreeNode getFormDataSourceNode(Name _formName)
         #{
         #    #AOT
@@ -1269,6 +982,15 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #getFormDesignNode
+        #/// <summary>
+        #/// Finds form design AOT path node.
+        #/// </summary>
+        #/// <param name="_formName">
+        #/// Form name.
+        #/// </param>
+        #/// <returns>
+        #/// AOT path node.
+        #/// </returns>
         #public static TreeNode getFormDesignNode(Name _formName)
         #{
         #    #AOT
@@ -1282,6 +1004,15 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #getMenuItemDisplayNode
+        #/// <summary>
+        #/// Finds menu item AOT path node.
+        #/// </summary>
+        #/// <param name="_menuItemDisplayName">
+        #/// Menu item name.
+        #/// </param>
+        #/// <returns>
+        #/// AOT path node.
+        #/// </returns>
         #public static TreeNode getMenuItemDisplayNode(Name _menuItemDisplayName = "")
         #{
         #    #AOT
@@ -1298,6 +1029,15 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #getQueryDataSourceNode
+        #/// <summary>
+        #/// Finds query data source AOT path node.
+        #/// </summary>
+        #/// <param name="_queryName">
+        #/// Query name.
+        #/// </param>
+        #/// <returns>
+        #/// AOT path node.
+        #/// </returns>
         #public static TreeNode getQueryDataSourceNode(Name _queryName)
         #{
         #    #AOT
@@ -1311,6 +1051,18 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #getQueryFieldsNode
+        #/// <summary>
+        #/// Finds query fields AOT path node.
+        #/// </summary>
+        #/// <param name="_queryName">
+        #/// Query name.
+        #/// </param>
+        #/// <param name="_tableName">
+        #/// Data source name.
+        #/// </param>
+        #/// <returns>
+        #/// AOT path node.
+        #/// </returns>
         #public static TreeNode getQueryFieldsNode(Name _queryName, Name _tableName)
         #{
         #    #AOT
@@ -1324,6 +1076,18 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #newTable2FormCreate
+        #/// <summary>
+        #/// Create object based on form style.
+        #/// </summary>
+        #/// <param name="_formStyle">
+        #/// Form style.
+        #/// </param>
+        #/// <returns>
+        #/// Class object.
+        #/// </returns>
+        #/// <exception cref="Exception::Error">
+        #/// Form style not yet mapped.
+        #/// </exception>
         #static DAXDTable2FormCreate newTable2FormCreate(FormStyle _formStyle)
         #{
         #    switch (_formStyle)
@@ -1372,6 +1136,9 @@ Formatversion: 1
     
     METHODS
       SOURCE #classDeclaration
+        #/// <summary>
+        #/// Holds details to create main and detail forms.
+        #/// </summary>
         #class DAXDTable2FormTranslation
         #{
         #    SysUtilElementName tableName;
@@ -1403,6 +1170,15 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #getFormStyle
+        #/// <summary>
+        #/// Get form style based on table group.
+        #/// </summary>
+        #/// <returns>
+        #/// Form style enum.
+        #/// </returns>
+        #/// <exception cref="Exception::Error">
+        #/// Table group yet not mapped.
+        #/// </exception>
         #public FormStyle getFormStyle()
         #{
         #    FormStyle ret;
@@ -1457,6 +1233,12 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #getTableId
+        #/// <summary>
+        #/// Get table id.
+        #/// </summary>
+        #/// <returns>
+        #/// Table id.
+        #/// </returns>
         #public TableId getTableId()
         #{
         #    TableId ret;
@@ -1468,6 +1250,9 @@ Formatversion: 1
         #}
       ENDSOURCE
       SOURCE #init
+        #/// <summary>
+        #/// Initialize object.
+        #/// </summary>
         #private void init()
         #{
         #    ;
@@ -1743,20 +1528,6 @@ Formatversion: 1
         #{
         #    boolean ret = true;
         #    ;
-        #
-        #    /*
-        #    if (formTranslation.parmCreateDetailFormMaster() && formTranslation.parmCreateDetailFormTransaction())
-        #    {
-        #        ret = checkFailed("Cannot create both detail form master and detail form transaction forms at once.");
-        #    }
-        #    */
-        #
-        #    if ((formTranslation.parmFormStyle() == FormStyle::DetailsFormTransaction ||
-        #         formTranslation.parmFormStyleDetail() == FormStyle::DetailsFormTransaction) &&
-        #         !formTranslation.parmTableTransactionName())
-        #    {
-        #        ret = checkFailed("In the current setup, the field 'Transaction table name' cannot be blank.");
-        #    }
         #
         #    return ret;
         #}
@@ -4420,44 +4191,6 @@ ENDFORM
   ENDPROPERTIES
   
     PROJECTCLASS ProjectNode
-    GROUP #Test_Tables
-      PROPERTIES
-        Name                #Test_Tables
-        ProjectGroupType    #All
-        GroupMask           #
-        PreventEditProperties #No
-      ENDPROPERTIES
-      
-      BEGINNODE
-        FILETYPE 0
-        UTILTYPE 44
-        UTILOBJECTID 105228
-        NODETYPE 204
-        NAME #TSTMainTable
-      ENDNODE
-      BEGINNODE
-        FILETYPE 0
-        UTILTYPE 44
-        UTILOBJECTID 105229
-        NODETYPE 204
-        NAME #TSTSimpleListTable
-      ENDNODE
-      BEGINNODE
-        FILETYPE 0
-        UTILTYPE 44
-        UTILOBJECTID 105230
-        NODETYPE 204
-        NAME #TSTTransactionTable
-      ENDNODE
-      BEGINNODE
-        FILETYPE 0
-        UTILTYPE 44
-        UTILOBJECTID 105224
-        NODETYPE 204
-        NAME #TSTTableOfContentTable
-      ENDNODE
-      ENDGROUP
-      
     GROUP #Classes
       PROPERTIES
         Name                #Classes
