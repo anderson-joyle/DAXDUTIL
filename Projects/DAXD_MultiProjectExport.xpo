@@ -1,9 +1,9 @@
-Exportfile for AOT version 1.0 or later
+﻿Exportfile for AOT version 1.0 or later
 Formatversion: 1
 
 ***Element: CLS
 
-; Microsoft Dynamics AX Class: SysContextMenu unloaded
+; Microsoft Dynamics AX Class: SysContextMenu descarregado
 ; --------------------------------------------------------------------------------
   CLSVERSION 1
   
@@ -1107,7 +1107,7 @@ Formatversion: 1
 
 ***Element: CLS
 
-; Microsoft Dynamics AX Class: DAXD_MultiProjectExport unloaded
+; Microsoft Dynamics AX Class: DAXD_MultiProjectExport descarregado
 ; --------------------------------------------------------------------------------
   CLSVERSION 1
   
@@ -1118,6 +1118,50 @@ Formatversion: 1
     ENDPROPERTIES
     
     METHODS
+      SOURCE #add2Map
+        #private void add2Map(TreeNodeName _projectName)
+        #{
+        #    if (!projectMap)
+        #    {
+        #        projectMap = new Map(Types::String, Types::Integer);
+        #    }
+        #
+        #    projectMap.insert(_projectName, 1);
+        #}
+      ENDSOURCE
+      SOURCE #buildProjectSet
+        #public void buildProjectSet(FormTreeControl _formTreeControl)
+        #{
+        #    #ResAppl
+        #
+        #    TreeItemIdx            treeItemIdx;
+        #    FormTreeItem           formTreeItem = _formTreeControl.getItem(_formTreeControl.getRoot());
+        #    ImageListAppl_checkbox imageListAppl_checkbox  = new ImageListAppl_checkbox();
+        #    ;
+        #
+        #    projectSet = new Set(Types::String);
+        #
+        #    if (formTreeItem &&
+        #        _formTreeControl.getChild(formTreeItem.idx()) &&
+        #        formTreeItem.stateImage() != imageListAppl_checkbox.image(#imageCheckNone))
+        #    {
+        #        treeItemIdx = _formTreeControl.getChild(formTreeItem.idx());
+        #
+        #        while (treeItemIdx)
+        #        {
+        #            formTreeItem = _formTreeControl.getItem(treeItemIdx);
+        #
+        #            if (formTreeItem &&
+        #                formTreeItem.stateImage() == imageListAppl_checkbox.image(#imageCheckAll))
+        #            {
+        #                projectSet.add(formTreeItem.text());
+        #            }
+        #
+        #            treeItemIdx = _formTreeControl.getNextSibling(treeItemIdx);
+        #        }
+        #    }
+        #}
+      ENDSOURCE
       SOURCE #classDeclaration
         #/// <summary>
         #/// Manage the multi project export process
@@ -1136,6 +1180,7 @@ Formatversion: 1
         #    str 5 suffix;
         #
         #    Set projectSet;
+        #    Map projectMap;
         #}
       ENDSOURCE
       SOURCE #dialog
@@ -1171,20 +1216,19 @@ Formatversion: 1
         #{
         #    #AviFiles
         #
-        #    TreeNode         node;
-        #    SetEnumerator    enumerator = projectSet.getEnumerator();
-        #
         #    SysOperationProgress progress = new SysOperationProgress();
+        #    SetEnumerator        setEnum = projectSet.getEnumerator();
         #
-        #    Name  curProjName;
+        #    TreeNode node;
+        #    Name     curProjName;
         #
         #    progress.setCaption("Exporting projects...");
         #    progress.setAnimation(#AviUpdate);
         #    progress.setTotal(projectSet.elements());
         #
-        #    while (enumerator.moveNext())
+        #    while (setEnum.moveNext())
         #    {
-        #        curProjName = enumerator.current();
+        #        curProjName = setEnum.current();
         #
         #        progress.setText(strfmt("Project: %1 ", curProjName));
         #        progress.incCount();
@@ -1192,6 +1236,36 @@ Formatversion: 1
         #        node = TreeNode::findNode(strFmt("%1\\%2", this.parmProjectTreeNode().treeNodePath(), curProjName));
         #        node.treeNodeExport(strFmt("%1\\%2.xpo", this.parmFilePath(), curProjName));
         #    }
+        #}
+      ENDSOURCE
+      SOURCE #getLayerText
+        #private str getLayerText(TreeNodeName _name)
+        #{
+        #    TreeNode       node;
+        #    SetEnumerator  setEnum;
+        #
+        #    UtilEntryLevel utilEntryLevelLoc;
+        #
+        #    str ret;
+        #
+        #    node = TreeNode::findNode(strFmt("%1\\%2", this.parmProjectTreeNode().treeNodePath(), _name));
+        #
+        #    setEnum = node.AOTLayers().getEnumerator();
+        #
+        #    ret += "(";
+        #
+        #    while (setEnum.moveNext())
+        #    {
+        #        utilEntryLevelLoc = setEnum.current();
+        #
+        #        ret += enum2str(utilEntryLevelLoc);
+        #        ret += ",";
+        #    }
+        #
+        #    ret  = subStr(ret, 1, strLen(ret) - 1);
+        #    ret += ")";
+        #
+        #    return ret;
         #}
       ENDSOURCE
       SOURCE #isValid
@@ -1213,7 +1287,7 @@ Formatversion: 1
         #
         #    if (_node)
         #    {
-        #        if (this.parmPerEntryLevel() && !_node.getNodeInLayer(this.parmUtilEntryLevel()))
+        #        if (this.parmPerEntryLevel() && !_node.AOTLayers().in(this.parmUtilEntryLevel()))
         #        {
         #            ret = false;
         #        }
@@ -1236,19 +1310,19 @@ Formatversion: 1
         #    return ret;
         #}
       ENDSOURCE
-      SOURCE #loadSet
+      SOURCE #loadMap
         #/// <summary>
         #/// Load set collection with the projects name
         #/// </summary>
         #/// <remarks>
         #///
         #/// </remarks>
-        #public void loadSet()
+        #public void loadMap()
         #{
         #    TreeNode node;
         #    TreeNodeIterator iterator = this.parmProjectTreeNode().AOTiterator();
         #
-        #    projectSet = new Set(Types::String);
+        #    projectMap = new Map(Types::String, Types::Integer);
         #
         #    node = iterator.next();
         #
@@ -1256,7 +1330,7 @@ Formatversion: 1
         #    {
         #        if (this.isValid(node))
         #        {
-        #           projectSet.add(node.AOTname());
+        #           projectMap.insert(node.AOTname(), FormTreeItemStatus::Selected);
         #        }
         #
         #        node = iterator.next();
@@ -1327,23 +1401,42 @@ Formatversion: 1
         #    ImageRes                imageRes;
         #    ImageListAppl_checkbox  imageListAppl_checkbox  = new ImageListAppl_checkbox();
         #
-        #    SetEnumerator           enumerator;
+        #    MapIterator mapIterator;
+        #    Name        projName;
         #
-        #    this.loadSet();
+        #    int itemIdx;
+        #
+        #    this.loadMap();
         #
         #    _formTreeControl.deleteAll();
         #
-        #    if (projectSet.elements())
+        #    mapIterator = new MapIterator(projectMap);
+        #
+        #    if (projectMap.elements())
         #    {
-        #        SysFormTreeControl::addTreeItem(_formTreeControl, "@SYS114746", 0, '', 0, true, imageListAppl_checkbox.image(#imageCheckNone));
+        #        SysFormTreeControl::addTreeItem(_formTreeControl, "@SYS114746", 0, '', 0, true, imageListAppl_checkbox.image(#imageCheckAll));
         #
-        #        enumerator = projectSet.getEnumerator();
-        #
-        #        while (enumerator.moveNext())
+        #        mapIterator.begin();
+        #        while (mapIterator.more())
         #        {
-        #            imageRes = imageListAppl_checkbox.image(#imageCheckAll);
+        #            if (projectMap.lookup(mapIterator.key()) == FormTreeItemStatus::Selected)
+        #            {
+        #                imageRes = imageListAppl_checkbox.image(#imageCheckAll);
+        #            }
+        #            else
+        #            {
+        #                imageRes = imageListAppl_checkbox.image(#imageCheckNone);
+        #            }
         #
-        #            SysFormTreeControl::addTreeItem(_formTreeControl, enumerator.current(), _formTreeControl.getRoot(), enumerator.current(), 0, false, imageRes);
+        #            itemIdx = SysFormTreeControl::addTreeItem(_formTreeControl,
+        #                                                      mapIterator.key(),
+        #                                                      _formTreeControl.getRoot(),
+        #                                                      mapIterator.value(),
+        #                                                      0,
+        #                                                      false,
+        #                                                      imageRes);
+        #
+        #            mapIterator.next();
         #        }
         #
         #        _formTreeControl.expand(_formTreeControl.getRoot());
@@ -1387,7 +1480,7 @@ Formatversion: 1
         #        if (treeNode)
         #        {
         #            obj.parmProjectTreeNode(treeNode);
-        #            obj.loadSet();
+        #            obj.loadMap();
         #            obj.dialog();
         #        }
         #    }
@@ -1424,12 +1517,16 @@ FORM #DAXD_MultiExportDialog
       #
       #    #FormListControl
       #
+      #    ImageListAppl_checkbox  imageListAppl_checkbox;
+      #
       #    DAXD_MultiProjectExport multiProjectExport;
       #}
     ENDSOURCE
     SOURCE #init
       #public void init()
       #{
+      #    imageListAppl_checkbox  = new ImageListAppl_checkbox();
+      #
       #    if (element.args().caller())
       #    {
       #        multiProjectExport = element.args().caller();
@@ -1440,6 +1537,8 @@ FORM #DAXD_MultiExportDialog
       #    }
       #
       #    super();
+      #
+      #    ProjectTree.setStateImagelist(imageListAppl_checkbox.imageList());
       #}
     ENDSOURCE
     SOURCE #mouseClick
@@ -1595,9 +1694,9 @@ FORM #DAXD_MultiExportDialog
             #
             #    super();
             #
-            #    multiProjectExport.parmPerEntryLevel(enabled);
+            #    multiProjectExport.parmPerEntryLevel(!enabled);
             #
-            #    if (enabled)
+            #    if (!enabled)
             #    {
             #        multiProjectExport.parmUtilEntryLevel(Layer.selection());
             #    }
@@ -1769,6 +1868,7 @@ FORM #DAXD_MultiExportDialog
             #{
             #    if (multiProjectExport.validate())
             #    {
+            #        multiProjectExport.buildProjectSet(ProjectTree);
             #        multiProjectExport.export();
             #    }
             #
@@ -2074,7 +2174,7 @@ ENDFORM
     
     MENUITEM
       PROPERTIES
-        Name                #Compare existing code to proposed fix
+        Name                #Compare o código existente à correção proposta
         MenuItemType        #Action
         MenuItemName        #SysUpgradeConflictCodeRuleCompareUpgrade
       ENDPROPERTIES
@@ -2082,7 +2182,7 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Auto-resolve source code rule conflict
+        Name                #Resolver automaticamente conflito de regra de código-fonte
         MenuItemType        #Action
         MenuItemName        #SysUpgradeConflictCodeRuleAutoResolve
       ENDPROPERTIES
@@ -2090,7 +2190,7 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Compare altered code to original code
+        Name                #Comparar código alterado ao código original
         MenuItemType        #Action
         MenuItemName        #SysUpgradeConflictCodeRuleCompareOrigina
       ENDPROPERTIES
@@ -2098,7 +2198,7 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Revert auto-resolve source code rule conflict
+        Name                #Reverter resolução automática de conflito de regra de código-fonte
         MenuItemType        #Action
         MenuItemName        #SysUpgradeConflictCodeRuleRevertResolve
       ENDPROPERTIES
@@ -2106,7 +2206,7 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Mark as resolved
+        Name                #Marcar como resolvido
         MenuItemType        #Action
         MenuItemName        #SysUpgradeProjectMarkAsResolved
       ENDPROPERTIES
@@ -2114,7 +2214,7 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Mark as unresolved
+        Name                #Marcar como não resolvidos
         MenuItemType        #Action
         MenuItemName        #SysUpgradeProjectMarkAsUnresolved
       ENDPROPERTIES
@@ -2122,7 +2222,7 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Mark as resolved (including subnodes)
+        Name                #Marcar como resolvido (incluindo subnós)
         MenuItemType        #Action
         MenuItemName        #SysUpgradeProjectMarkAsResolvedRecursive
       ENDPROPERTIES
@@ -2130,7 +2230,7 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Mark as unresolved (including subnodes)
+        Name                #Marcar como não resolvido (incluindo subnós)
         MenuItemType        #Action
         MenuItemName        #SysUpgradeProjectMarkAsUnresolvedRecursi
       ENDPROPERTIES
@@ -2138,7 +2238,7 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Rerun conflict detection
+        Name                #Executar novamente detecção de conflitos
         MenuItemType        #Action
         MenuItemName        #SysUpgradeDetectConflictsRerun
       ENDPROPERTIES
@@ -2153,14 +2253,14 @@ ENDFORM
       
       MENUITEM
         PROPERTIES
-          Name                #Used by
+          Name                #Usado por
           MenuItemName        #XRefReferencesUsedBy
         ENDPROPERTIES
         
       ENDMENUITEM
       MENUITEM
         PROPERTIES
-          Name                #Using (instant view)
+          Name                #Usando (exibição instantânea)
           MenuItemType        #Action
           MenuItemName        #xRefUpdateTmpReferences
         ENDPROPERTIES
@@ -2168,21 +2268,21 @@ ENDFORM
       ENDMENUITEM
       MENUITEM
         PROPERTIES
-          Name                #Names
+          Name                #Nomes
           MenuItemName        #XRefNames
         ENDPROPERTIES
         
       ENDMENUITEM
       MENUITEM
         PROPERTIES
-          Name                #Using
+          Name                #Uso
           MenuItemName        #XRefReferencesUsing
         ENDPROPERTIES
         
       ENDMENUITEM
       MENUITEM
         PROPERTIES
-          Name                #Update
+          Name                #Atualizar
           MenuItemType        #Action
           MenuItemName        #xRefUpdate
         ENDPROPERTIES
@@ -2197,35 +2297,35 @@ ENDFORM
       
       MENUITEM
         PROPERTIES
-          Name                #XRef analyzer
+          Name                #Analisador de XRef
           MenuItemName        #syssecanalysisaddIn
         ENDPROPERTIES
         
       ENDMENUITEM
       MENUITEM
         PROPERTIES
-          Name                #Metadata analyzer
+          Name                #Analisador de metadados
           MenuItemName        #syssecanalysisaddInmetadataAnalyzer
         ENDPROPERTIES
         
       ENDMENUITEM
       MENUITEM
         PROPERTIES
-          Name                #View related security roles
+          Name                #Exibir funções de segurança relacionadas
           MenuItemName        #SysSecObjectsAnalyze
         ENDPROPERTIES
         
       ENDMENUITEM
       MENUITEM
         PROPERTIES
-          Name                #View related security objects
+          Name                #Exibir objetos de segurança relacionados
           MenuItemName        #SysSecObjectsInRole
         ENDPROPERTIES
         
       ENDMENUITEM
       MENUITEM
         PROPERTIES
-          Name                #Apply changes
+          Name                #Aplicar alterações
           MenuItemType        #Action
           MenuItemName        #SysSecSecurityApply
         ENDPROPERTIES
@@ -2235,14 +2335,14 @@ ENDFORM
     SEPARATOR
     MENUITEM
       PROPERTIES
-        Name                #Table browser
+        Name                #Navegador de tabela
         MenuItemName        #sysTableBrowser
       ENDPROPERTIES
       
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Auto-report
+        Name                #Relatório automático
         MenuItemName        #SysTableForm
       ENDPROPERTIES
       
@@ -2250,14 +2350,14 @@ ENDFORM
     SEPARATOR
     MENUITEM
       PROPERTIES
-        Name                #Reverse engineer
+        Name                #Engenharia Reversa
         MenuItemName        #SysVisioAddIn
       ENDPROPERTIES
       
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Extract XML documentation
+        Name                #Extrair documentação XML
         MenuItemType        #Output
         MenuItemName        #SysXmlDocumentationCreateFile
       ENDPROPERTIES
@@ -2265,7 +2365,7 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Run tests
+        Name                #Executar testes
         MenuItemType        #Action
         MenuItemName        #SysTestToolbarOpen
       ENDPROPERTIES
@@ -2273,7 +2373,7 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Type hierarchy browser
+        Name                #Navegador da hierarquia de tipo
         MenuItemName        #SysTypeHierarchyBrowser
       ENDPROPERTIES
       
@@ -2281,7 +2381,7 @@ ENDFORM
     SEPARATOR
     MENUITEM
       PROPERTIES
-        Name                #Compare
+        Name                #Comparar
         MenuItemType        #Action
         MenuItemName        #sysCompare
       ENDPROPERTIES
@@ -2289,7 +2389,7 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Compile forward
+        Name                #Compilar avançar
         MenuItemType        #Action
         MenuItemName        #sysCompileForward
       ENDPROPERTIES
@@ -2297,7 +2397,7 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Impact Analysis
+        Name                #Análise de Impacto
         MenuItemType        #Action
         MenuItemName        #SysImpactAnalysis
       ENDPROPERTIES
@@ -2305,7 +2405,7 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Find and replace
+        Name                #Localizar e substituir
         MenuItemType        #Action
         MenuItemName        #SysSourceReplaceText
       ENDPROPERTIES
@@ -2313,7 +2413,7 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Syntactic renaming
+        Name                #Renomeação sintática
         MenuItemType        #Action
         MenuItemName        #SysSourceReplaceSyntax
       ENDPROPERTIES
@@ -2321,7 +2421,7 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Duplicates
+        Name                #Duplicatas
         MenuItemName        #SysDictIndexShowDuplicates
       ENDPROPERTIES
       
@@ -2335,7 +2435,7 @@ ENDFORM
       
       MENUITEM
         PROPERTIES
-          Name                #Entire path
+          Name                #Caminho completo
           MenuItemType        #Action
           MenuItemName        #SysTreeNodePathCopyToClipboard
         ENDPROPERTIES
@@ -2343,7 +2443,7 @@ ENDFORM
       ENDMENUITEM
       MENUITEM
         PROPERTIES
-          Name                #Name
+          Name                #Nome
           MenuItemType        #Action
           MenuItemName        #SysTreeNodeNameCopyToClipboard
         ENDPROPERTIES
@@ -2351,7 +2451,7 @@ ENDFORM
       ENDMENUITEM
       MENUITEM
         PROPERTIES
-          Name                #Copy to current layer
+          Name                #Copiar para a camada atual
           MenuItemType        #Action
           MenuItemName        #systreenodecopyToCurrentLayer
         ENDPROPERTIES
@@ -2360,7 +2460,7 @@ ENDFORM
     ENDMENU
     MENUITEM
       PROPERTIES
-        Name                #Check best practices
+        Name                #Verificar Práticas Recomendadas
         MenuItemType        #Action
         MenuItemName        #SysBPCheck
       ENDPROPERTIES
@@ -2376,14 +2476,14 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Check form style best practices
+        Name                #Verificar práticas recomendadas de estilo do formulário
         MenuItemName        #SysBPStyleCheckAnalysis
       ENDPROPERTIES
       
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Source code title case update
+        Name                #Atualização da capitalização de título do código-fonte
         MenuItemType        #Action
         MenuItemName        #SysSourceNameWash
       ENDPROPERTIES
@@ -2391,7 +2491,7 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Generate Axd query
+        Name                #Gerar consulta Axd
         MenuItemType        #Action
         MenuItemName        #AxdGenerateAxdQuery
       ENDPROPERTIES
@@ -2399,14 +2499,14 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #AIF Document Service Wizard
+        Name                #Assistente do Serviço de Documento AIF
         MenuItemName        #AxdWizard
       ENDPROPERTIES
       
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Register service
+        Name                #Registrar serviço
         MenuItemType        #Action
         MenuItemName        #AifRegisterService
       ENDPROPERTIES
@@ -2414,14 +2514,14 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Help properties
+        Name                #Propriedades de ajuda
         MenuItemName        #HelpTopicID
       ENDPROPERTIES
       
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Lookup in Issue Search
+        Name                #Buscar em Pesquisa de Problemas
         MenuItemName        #SysLcsIssueSearchAotItem
       ENDPROPERTIES
       
@@ -2436,7 +2536,7 @@ ENDFORM
       
       MENUITEM
         PROPERTIES
-          Name                #Open application object window
+          Name                #Abrir janela de objetos do aplicativo
           MenuItemType        #Action
           MenuItemName        #SysTreeNodeApplObjectOpenNewWindow
         ENDPROPERTIES
@@ -2444,7 +2544,7 @@ ENDFORM
       ENDMENUITEM
       MENUITEM
         PROPERTIES
-          Name                #Open parent in window
+          Name                #Abrir Pai na janela
           MenuItemType        #Action
           MenuItemName        #SysTreeNodeParentOpenNewWindow
         ENDPROPERTIES
@@ -2452,7 +2552,7 @@ ENDFORM
       ENDMENUITEM
       MENUITEM
         PROPERTIES
-          Name                #Open new window
+          Name                #Abrir nova janela
           MenuItemType        #Action
           MenuItemName        #SysTreeNodeOpenNewWindow
         ENDPROPERTIES
@@ -2596,7 +2696,7 @@ ENDFORM
       ENDMENU
       MENUITEM
         PROPERTIES
-          Name                #Open used table
+          Name                #Abrir tabela usada
           MenuItemType        #Action
           MenuItemName        #SysOpenNewWindowTable
         ENDPROPERTIES
@@ -2604,7 +2704,7 @@ ENDFORM
       ENDMENUITEM
       MENUITEM
         PROPERTIES
-          Name                #Open used table field group
+          Name                #Abrir grupo de campos de tabela utilizado
           MenuItemType        #Action
           MenuItemName        #SysOpenNewWindowFieldGroup
         ENDPROPERTIES
@@ -2612,7 +2712,7 @@ ENDFORM
       ENDMENUITEM
       MENUITEM
         PROPERTIES
-          Name                #Open used Extended Data Type
+          Name                #Abrir o Tipo de Dados Estendido
           MenuItemType        #Action
           MenuItemName        #SysOpenNewWindowExtendedType
         ENDPROPERTIES
@@ -2620,7 +2720,7 @@ ENDFORM
       ENDMENUITEM
       MENUITEM
         PROPERTIES
-          Name                #Open used Enum
+          Name                #Abrir o Enum utilizado
           MenuItemType        #Action
           MenuItemName        #SysOpenNewWindowEnum
         ENDPROPERTIES
@@ -2628,7 +2728,7 @@ ENDFORM
       ENDMENUITEM
       MENUITEM
         PROPERTIES
-          Name                #Open used class
+          Name                #Abrir a classe utilizada
           MenuItemType        #Action
           MenuItemName        #SysOpenNewWindowClass
         ENDPROPERTIES
@@ -2636,7 +2736,7 @@ ENDFORM
       ENDMENUITEM
       MENUITEM
         PROPERTIES
-          Name                #Open used form
+          Name                #Abrir o formulário utilizado
           MenuItemType        #Action
           MenuItemName        #SysOpenNewWindowForm
         ENDPROPERTIES
@@ -2644,7 +2744,7 @@ ENDFORM
       ENDMENUITEM
       MENUITEM
         PROPERTIES
-          Name                #Open used report
+          Name                #Abrir o Relatório utilizado
           MenuItemType        #Action
           MenuItemName        #SysOpenNewWindowReport
         ENDPROPERTIES
@@ -2652,7 +2752,7 @@ ENDFORM
       ENDMENUITEM
       MENUITEM
         PROPERTIES
-          Name                #Open used menu item
+          Name                #Abrir o item de menu utilizado
           MenuItemType        #Action
           MenuItemName        #SysOpenNewWindowMenuItem
         ENDPROPERTIES
@@ -2661,7 +2761,7 @@ ENDFORM
     ENDMENU
     MENUITEM
       PROPERTIES
-        Name                #Properties
+        Name                #Propriedades
         MenuItemType        #Action
         MenuItemName        #SysTreeNodeShowProperties
       ENDPROPERTIES
@@ -2669,7 +2769,7 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Full CIL generation from X++
+        Name                #Geração CIL completa de X++
         MenuItemType        #Action
         MenuItemName        #SysXppILFullBuild
       ENDPROPERTIES
@@ -2677,7 +2777,7 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Incremental CIL generation from X++
+        Name                #Geração CIL incremental de X++
         MenuItemType        #Action
         MenuItemName        #SysXppILIncrementalBuild
       ENDPROPERTIES
@@ -2685,21 +2785,21 @@ ENDFORM
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Approval wizard...
+        Name                #Assistente de aprovação…
         MenuItemName        #WorkflowAOTWizardApproval
       ENDPROPERTIES
       
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Task wizard...
+        Name                #Assistente da tarefas…
         MenuItemName        #WorkflowAOTWizardTask
       ENDPROPERTIES
       
     ENDMENUITEM
     MENUITEM
       PROPERTIES
-        Name                #Workflow type wizard...
+        Name                #Assistente de tipo de fluxo de trabalho...
         MenuItemName        #WorkflowAOTWizardType
       ENDPROPERTIES
       
@@ -2739,7 +2839,7 @@ ENDFORM
       BEGINNODE
         FILETYPE 0
         UTILTYPE 45
-        UTILOBJECTID 1025785
+        UTILOBJECTID 1029067
         NODETYPE 329
         NAME #DAXD_MultiProjectExport
       ENDNODE
