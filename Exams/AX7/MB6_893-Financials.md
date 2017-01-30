@@ -1,6 +1,6 @@
 # 	MB6-893 - Microsoft Dynamics AX Financials
 
-This document is meant to help any AX developer to prepare himself to take [MB6-892] (https://www.microsoft.com/en-us/learning/exam-mb6-892.aspx).
+This document is meant to help any AX professional to prepare himself to take [MB6-893] (https://www.microsoft.com/en-us/learning/exam-mb6-893.aspx).
 Feel free to contribute in any matter to improve this document.
 
 ##Set up and configure the Finance modules (15–20%)
