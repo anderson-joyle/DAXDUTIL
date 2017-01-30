@@ -1,6 +1,6 @@
 # 	MB6-890 - Microsoft Dynamics AX Development Introduction
 
-This document is meant to help any AX developer to preper himself to take [MB6-890] (https://www.microsoft.com/en-us/learning/exam-mb6-890.aspx).
+This document is meant to help any AX developer to prepare himself to take [MB6-890] (https://www.microsoft.com/en-us/learning/exam-mb6-890.aspx).
 Feel free to contribute in any matter to improve this document.
 
 ##Understand the architecture and development environment (20% - 25%)
