@@ -1,10 +1,11 @@
 # DAXDUTIL
 Microsoft Dynamics AX Utilities for developers
 
-This is a list with some utilities and tools that might be useful at DAX development process. Each file represents a single project and were written in a clean AX enviroment.
+This is a list with some utilities and tools that might be useful at DAX development process. Each file represents a single project and were written in a clean AX environment.
  
 You are more than welcome to contribute with your awsome utility/tool.
 
+##Tools
 ### DAX 2012 tools
 * [Tables](https://github.com/anderson-joyle/DAXDUTIL/tree/master/Tables)
   * [Find method](https://github.com/anderson-joyle/DAXDUTIL/blob/master/Tables/DAXD_TableFindMethod.xpo) - Creates the method finds based on table's key/index properties. In order of relevance: *ReplacementKey* and *PrimaryIndex*. To use it, create a new table method and *right click > Scripts > template > table > find*
@@ -16,5 +17,9 @@ You are more than welcome to contribute with your awsome utility/tool.
 * [Projects](https://github.com/anderson-joyle/DAXDUTIL/tree/master/Projects)
   * [Multi project export](https://github.com/anderson-joyle/DAXDUTIL/blob/master/Projects/DAXD_MultiProjectExport.xpo) - Enable the developer to export multiple projects at once, filtering by prefix, suffix and/or layer. To use it, follow the [manual](http://andersonjoyle.com/2016/08/02/daxdutil-multiple-project-export-manual).
 
+##Exams
+Hints for all Dynamics AX developers who are going to take certification exams. If this file was usefull to you, please don't exitate to contribute with your own hints.
 
-
+Kindly find below the current exams file structure:
+* Microsoft Dynamics 365 for Operations
+ * [MB6-890 - Microsoft Dynamics AX Development Introduction] (https://github.com/anderson-joyle/DAXDUTIL/blob/master/Exams/AX7/MB6_890-Development_Introduction.md)
