@@ -5,4 +5,8 @@ This folder holds hints for Dynamics AX certification exams. You may describe th
 Example:
 - During migration, some pain points can occur [mark all that apply]:  https://ax.help.dynamics.com/en/wiki/using-data-entities-and-data-packages/#data-migration
 
+Currently you can find hints for ther following exams:
+* Microsoft Dynamics for Operations (AX7)
+  * [MB6-890 - Microsoft Dynamics AX Development Introduction] (https://github.com/anderson-joyle/DAXDUTIL/blob/master/Exams/AX7/MB6_890-Development_Introduction.md)
+
 You are more than welcome to contribute, specially correcting my english.
