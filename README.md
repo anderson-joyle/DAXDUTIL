@@ -18,7 +18,7 @@ You are more than welcome to contribute with your awsome utility/tool.
   * [Multi project export](https://github.com/anderson-joyle/DAXDUTIL/blob/master/Projects/DAXD_MultiProjectExport.xpo) - Enable the developer to export multiple projects at once, filtering by prefix, suffix and/or layer. To use it, follow the [manual](http://andersonjoyle.com/2016/08/02/daxdutil-multiple-project-export-manual).
 
 ##Exams
-Hints for all Dynamics AX developers who are going to take certification exams. If this file was usefull to you, please don't exitate to contribute with your own hints.
+Hints for all Dynamics AX professionals who are going to take certification exams. If this file was usefull to you, please don't hesitate to contribute with your own hints.
 
 Kindly find below the current exams file structure:
 * Microsoft Dynamics 365 for Operations
