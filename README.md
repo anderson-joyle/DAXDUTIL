@@ -23,3 +23,5 @@ Hints for all Dynamics AX developers who are going to take certification exams. 
 Kindly find below the current exams file structure:
 * Microsoft Dynamics 365 for Operations
  * [MB6-890 - Microsoft Dynamics AX Development Introduction] (https://github.com/anderson-joyle/DAXDUTIL/blob/master/Exams/AX7/MB6_890-Development_Introduction.md)
+ * [MB6-892 - Microsoft Dynamics AX Distribution and Trade] (https://github.com/anderson-joyle/DAXDUTIL/blob/master/Exams/AX7/MB6_892-Distribution_and_Trade.md)
+ * [MB6-893 - Microsoft Dynamics AX Financials] (https://github.com/anderson-joyle/DAXDUTIL/blob/master/Exams/AX7/MB6_893-Financials.md)
