@@ -3,7 +3,7 @@
 This document is meant to help any AX developer to prepare himself to take [MB6-890] (https://www.microsoft.com/en-us/learning/exam-mb6-890.aspx).
 
 Feel free to contribute in any matter to improve this document.
-If you have a git account, just send a pull request. Otherwise, send your comments via [anderson@joyle.com] (mailto:anderson@joyle.com).
+If you have a git account, just send a pull request. Otherwise, send your comments via [anderson@joyle.com.br] (mailto:anderson@joyle.com.br).
 
 ##Understand the architecture and development environment (20% - 25%)
 * Describe the Microsoft Dynamics AX architecture 
