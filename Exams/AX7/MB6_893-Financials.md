@@ -1,7 +1,9 @@
 # 	MB6-893 - Microsoft Dynamics AX Financials
 
 This document is meant to help any AX professional to prepare himself to take [MB6-893] (https://www.microsoft.com/en-us/learning/exam-mb6-893.aspx).
+
 Feel free to contribute in any matter to improve this document.
+If you have a git account, just send a pull request. Otherwise, send your comments via [anderson@joyle.com] (mailto:anderson@joyle.com).
 
 ##Set up and configure the Finance modules (15–20%)
 * Define and format the General Ledger module
