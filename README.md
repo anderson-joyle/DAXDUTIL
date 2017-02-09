@@ -6,8 +6,8 @@ This is a list with some utilities and tools that might be useful at DAX develop
 You are more than welcome to contribute with your awsome utility/tool.
 
 ##Development tools
-### [DAX 2012] (https://github.com/anderson-joyle/DAXDUTIL/tree/master/Development%20tools/AX2012)
-### [AX7] (https://github.com/anderson-joyle/DAXDUTIL/tree/master/Development%20tools/AX7)
+* [DAX 2012] (https://github.com/anderson-joyle/DAXDUTIL/tree/master/Development%20tools/AX2012)
+* [AX7] (https://github.com/anderson-joyle/DAXDUTIL/tree/master/Development%20tools/AX7)
 
 ##Exams
 Hints for all Dynamics AX professionals who are going to take certification exams. If this file was usefull to you, please don't hesitate to contribute with your own hints.
