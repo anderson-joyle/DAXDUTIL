@@ -16,4 +16,5 @@ To import all snippets from this repository at once, you can follow the followin
 * Copy the files from the zip file previously downloaded (DAXDUTIL/Development tools/AX7/Snippets) and paste into new created folder (from previous step)
 
 ## Snippets
-* [construct] (https://github.com/anderson-joyle/DAXDUTIL/blob/master/Development%20tools/AX7/Snippets/construct.snippet): Creates a construct method to a class
+* [construct] (https://github.com/anderson-joyle/DAXDUTIL/blob/master/Development%20tools/AX7/Snippets/construct.snippet): Creates a construct method to a class.
+* [table_find_exist] (https://github.com/anderson-joyle/DAXDUTIL/blob/master/Development%20tools/AX7/Snippets/table_find_exist.snippet): Creates both find and exist table methods.
